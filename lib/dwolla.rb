@@ -3,15 +3,25 @@
 require 'openssl'
 require 'rest_client'
 require 'multi_json'
+require 'addressable/uri'
 
 # Version
 require 'dwolla/version'
 
 # Resources
+require 'dwolla/json'
 require 'dwolla/transactions'
+require 'dwolla/requests'
+require 'dwolla/contacts'
+require 'dwolla/users'
 
 # Errors
-require 'dwolla/error'
+require 'dwolla/errors/dwolla_error'
+require 'dwolla/errors/api_connection_error'
+require 'dwolla/errors/api_error'
+require 'dwolla/errors/missing_parameter_error'
+require 'dwolla/errors/authentication_error'
+require 'dwolla/errors/invalid_request_error'
 
 module Dwolla
     @@api_key = nil
@@ -38,6 +48,22 @@ module Dwolla
         @@api_secret
     end
 
+    def self.api_version=(api_version)
+        @@api_version = api_version
+    end
+
+    def self.api_version
+        @@api_version
+    end
+
+    def self.verify_ssl_certs=(verify_ssl_certs)
+        @@verify_ssl_certs = verify_ssl_certs
+    end
+
+    def self.verify_ssl_certs
+        @@verify_ssl_certs
+    end
+
     def self.token=(token)
         @@token = token
     end
@@ -46,13 +72,23 @@ module Dwolla
         @@token
     end
 
-    def self.endpoint_url=(endpoint)
+    def self.endpoint_url(endpoint)
         @@api_base + endpoint
     end
 
-    def self.request=(method, url, token, params={}, headers={})
-        token ||= @@token
-        raise AuthenticationError.new('No OAuth Token Provided.') unless token
+    def self.request(method, url, params={}, headers={}, oauth=true)
+        if oauth
+            raise AuthenticationError.new('No OAuth Token Provided.') unless token
+            params = {
+                :oauth_token => token
+            }.merge(params)
+        else
+            raise AuthenticationError.new('No App Key & Secret Provided.') unless (api_key && api_secret)
+            params = {
+                :client_id => api_key,
+                :client_secret => api_secret
+            }.merge(params)
+        end
 
         if !verify_ssl_certs
             $stderr.puts "WARNING: Running without SSL cert verification."
@@ -61,7 +97,7 @@ module Dwolla
                 :verify_ssl => OpenSSL::SSL::VERIFY_PEER
             }
         end
-        
+
         uname = (@@uname ||= RUBY_PLATFORM =~ /linux|darwin/i ? `uname -a 2>/dev/null`.strip : nil)
         lang_version = "#{RUBY_VERSION} p#{RUBY_PATCHLEVEL} (#{RUBY_RELEASE_DATE})"
         ua = {
@@ -73,19 +109,19 @@ module Dwolla
             :uname => uname
         }
 
-        params = Util.objects_to_ids(params)
         url = self.endpoint_url(url)
 
         case method.to_s.downcase.to_sym
             when :get
                 # Make params into GET parameters
                 if params && params.count > 0
-                    query_string = Util.flatten_params(params).collect{|key, value| "#{key}=#{Util.url_encode(value)}"}.join('&')
-                    url += "#{URI.parse(url).query ? '&' : '?'}#{query_string}"
+                    uri = Addressable::URI.new
+                    uri.query_values = params
+                    url += '?' + uri.query
                 end
                 payload = nil
             else
-                payload = Util.flatten_params(params).collect{|(key, value)| "#{key}=#{Util.url_encode(value)}"}.join('&')
+                payload = ''
         end
 
         begin
@@ -98,7 +134,7 @@ module Dwolla
         end
 
         headers = {
-            :user_agent => "Dwolla RubyBindings/#{Dwolla::VERSION}",
+            :user_agent => "Dwolla Ruby API Wrapper/#{Dwolla::VERSION}",
             :content_type => 'application/json'
         }.merge(headers)
 
@@ -115,26 +151,88 @@ module Dwolla
             :timeout => 80
         }.merge(ssl_opts)
 
-        response = execute_request(opts)
+        begin
+            response = execute_request(opts)
+        rescue SocketError => e
+            self.handle_restclient_error(e)
+        rescue NoMethodError => e
+            # Work around RestClient bug
+            if e.message =~ /\WRequestFailed\W/
+                e = APIConnectionError.new('Unexpected HTTP response code')
+                self.handle_restclient_error(e)
+            else
+                raise
+            end
+        rescue RestClient::ExceptionWithResponse => e
+            if rcode = e.http_code and rbody = e.http_body
+                self.handle_api_error(rcode, rbody)
+            else
+                self.handle_restclient_error(e)
+            end
+        rescue RestClient::Exception, Errno::ECONNREFUSED => e
+            self.handle_restclient_error(e)
+        end
+
         rbody = response.body
         rcode = response.code
         begin
-            resp = Stripe::JSON.load(rbody)
+            resp = Dwolla::JSON.load(rbody)
         rescue MultiJson::DecodeError
-            raise APIError.new("Invalid response object from API: #{rbody.inspect} (HTTP response code was #{rcode})", rcode, rbody)
+            raise DwollaError.new("Invalid response object from API: #{rbody.inspect} (HTTP response code was #{rcode})", rcode, rbody)
         end
 
-        resp = Util.symbolize_names(resp)
-        [resp, api_key]
+        resp
     end
 
     private
-        def self.execute_request(opts)
-            RestClient::Request.execute(opts)
+ 
+    def self.execute_request(opts)
+        RestClient::Request.execute(opts)
+    end
+
+    def self.handle_api_error(rcode, rbody)
+        begin
+            error_obj = Dwolla::JSON.load(rbody)
+            error = error_obj[:error] or raise DwollaError.new # escape from parsing
+        rescue MultiJson::DecodeError, DwollaError
+            raise APIError.new("Invalid response object from API: #{rbody.inspect} (HTTP response code was #{rcode})", rcode, rbody)
         end
 
-        def self.authentication_error(error, rcode, rbody, error_obj)
-            AuthenticationError.new(error[:message], rcode, rbody, error_obj)
+        case rcode
+            when 400, 404 then
+                raise invalid_request_error(error, rcode, rbody, error_obj)
+            when 401
+                raise authentication_error(error, rcode, rbody, error_obj)
+            else
+                raise api_error(error, rcode, rbody, error_obj)
         end
+    end
+
+    def self.invalid_request_error(error, rcode, rbody, error_obj)
+        InvalidRequestError.new(error[:message], error[:param], rcode, rbody, error_obj)
+    end
+
+    def self.authentication_error(error, rcode, rbody, error_obj)
+        AuthenticationError.new(error[:message], rcode, rbody, error_obj)
+    end
+
+    def self.api_error(error, rcode, rbody, error_obj)
+        APIError.new(error[:message], rcode, rbody, error_obj)
+    end
+
+
+    def self.handle_restclient_error(e)
+        case e
+        when RestClient::ServerBrokeConnection, RestClient::RequestTimeout
+            message = "Could not connect to Stripe (#{@@api_base}).  Please check your internet connection and try again.  If this problem persists, you should check Stripe's service status at https://twitter.com/stripestatus, or let us know at support@stripe.com."
+        when RestClient::SSLCertificateNotVerified
+            message = "Could not verify Stripe's SSL certificate.  Please make sure that your network is not intercepting certificates.  (Try going to https://api.stripe.com/v1 in your browser.)  If this problem persists, let us know at support@stripe.com."
+        when SocketError
+            message = "Unexpected error communicating when trying to connect to Stripe.  HINT: You may be seeing this message because your DNS is not working.  To check, try running 'host stripe.com' from the command line."
+        else
+            message = "Unexpected error communicating with Stripe.  If this problem persists, let us know at support@stripe.com."
+        end
+            message += "\n\n(Network error: #{e.message})"
+        raise APIConnectionError.new(message)
     end
 end
