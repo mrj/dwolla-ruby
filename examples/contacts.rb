@@ -7,15 +7,15 @@ require 'dwolla'
 require '_keys.rb'
 
 # Instantiate a new Dwolla User client
-# And, Sseed a previously generated access token
-DwollaUser = Dwolla::User.me($token)
+# And, seed a previously generated access token
+Dwolla::token = $token
 
 
 # EXAMPLE 1: 
 #   Fetch last 10 contacts from the 
 #   account associated with the provided
 #   OAuth token
-contacts = DwollaUser.contacts()
+contacts = Dwolla::Contacts.get
 pp contacts
 
 
@@ -23,5 +23,5 @@ pp contacts
 #   Search through the contacts of the
 #   account associated with the provided
 #   OAuth token
-contacts = DwollaUser.contacts(:search => 'Ben')
+contacts = Dwolla::Contacts.get({:search => 'Ben'})
 pp contacts

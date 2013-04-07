@@ -7,20 +7,20 @@ require 'dwolla'
 require '_keys.rb'
 
 # Instantiate a new Dwolla User client
-# And, Sseed a previously generated access token
-DwollaUser = Dwolla::User.me($token)
+# And, seed a previously generated access token
+Dwolla::token = $token
 
 
 # EXAMPLE 1: 
 #   Fetch all funding sources for the
 #   account associated with the provided
 #   OAuth token
-sources = DwollaUser.funding_sources()
+sources = Dwolla::FundingSources.get
 pp sources
 
 
 # EXAMPLE 2: 
 #   Fetch detailed information for the
 #   funding source with a specific ID
-source = DwollaUser.funding_source('pJRq4tK38fiAeQ8xo2iH9Q==')
+source = Dwolla::FundingSources.get('pJRq4tK38fiAeQ8xo2iH9Q==')
 pp source

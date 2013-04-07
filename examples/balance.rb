@@ -1,17 +1,17 @@
 # Include the Dwolla gem
 require 'rubygems'
 require 'pp'
-require '../lib/dwolla'
+require 'dwolla'
 
 # Include any required keys
-require_relative '_keys.rb'
+require '_keys.rb'
 
 # Instantiate a new Dwolla User client
 # And, seed a previously generated access token
-DwollaUser = Dwolla::User.me($token)
+Dwolla::token = @token
 
 
 # EXAMPLE 1: 
 #   Get the balance of the authenticated user
-balance = DwollaUser.balance
+balance = Dwolla::Balance.get
 pp balance

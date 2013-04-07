@@ -243,16 +243,18 @@ module Dwolla
 
     def self.handle_restclient_error(e)
         case e
-        when RestClient::ServerBrokeConnection, RestClient::RequestTimeout
-            message = "Could not connect to Dwolla (#{@@api_base}).  Please check your internet connection and try again.  If this problem persists, you should check Dwolla's service status at https://twitter.com/Dwolla, or let us know at support@Dwolla.com."
-        when RestClient::SSLCertificateNotVerified
-            message = "Could not verify Dwolla's SSL certificate. If this problem persists, let us know at support@dwolla.com."
-        when SocketError
-            message = "Unexpected error communicating when trying to connect to Dwolla. If this problem persists, let us know at support@dwolla.com."
-        else
-            message = "Unexpected error communicating with Dwolla. If this problem persists, let us know at support@dwolla.com."
+            when RestClient::ServerBrokeConnection, RestClient::RequestTimeout
+                message = "Could not connect to Dwolla (#{@@api_base}).  Please check your internet connection and try again.  If this problem persists, you should check Dwolla's service status at https://twitter.com/Dwolla, or let us know at support@Dwolla.com."
+            when RestClient::SSLCertificateNotVerified
+                message = "Could not verify Dwolla's SSL certificate. If this problem persists, let us know at support@dwolla.com."
+            when SocketError
+                message = "Unexpected error communicating when trying to connect to Dwolla. If this problem persists, let us know at support@dwolla.com."
+            else
+                message = "Unexpected error communicating with Dwolla. If this problem persists, let us know at support@dwolla.com."
         end
-            message += "\n\n(Network error: #{e.message})"
+
+        message += "\n\n(Network error: #{e.message})"
+
         raise APIConnectionError.new(message)
     end
 end

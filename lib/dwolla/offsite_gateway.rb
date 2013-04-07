@@ -4,17 +4,20 @@ module Dwolla
         @discount = 0
         @tax = 0
         @shipping = 0
+        @destination_id = nil
+        @notes = nil
+        @facilitatorAmount = nil
 
         def self.clear_session
             @products = []
         end
 
-        def self.add_product(name=nil, description=nil, price=nil, qty=1)
+        def self.add_product(name=nil, description=nil, price=nil, quantity=1)
             @products.push {
                 :name => name,
                 :description => description,
                 :price => price,
-                :qty => qty
+                :quantity => quantity
             }
         end
 
@@ -30,12 +33,23 @@ module Dwolla
             @shipping = shipping
         end
 
-        def self.get_checkout_url(destinationId=nil, allowFundingSources=false)
+        def self.get_checkout_url(params={})
             params = {
-                
+                :key => Dwolla::api_key,
+                :secret => Dwolla::api_secret,
+                :purchaseOrder => {
+                    :destinationId => @destinationId,
+                    :orderItems => @products,
+                    :discount => @discount,
+                    :shipping => @shipping,
+                    :tax => @tax,
+                    :total => @total
+                }
             }
 
-            return request_url
+            resp = Dwolla.request(:post, request_url, params, {}, false, false)
+
+            return checkout_url + resp['CheckoutId']
         end
 
         private
@@ -44,8 +58,18 @@ module Dwolla
             return 'https://www.dwolla.com/payment/request'
         end
 
-        def self.calculate_total
+        def self.checkout_url
+            return 'https://www.dwolla.com/payment/checkout/'
+        end
 
+        def self.calculate_total
+            @total = 0
+
+            @products.each { |product|
+                @total += product['price'] * product['quantity']
+            }
+
+            return @total
         end
 
     end
