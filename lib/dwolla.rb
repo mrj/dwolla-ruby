@@ -16,6 +16,8 @@ require 'dwolla/contacts'
 require 'dwolla/users'
 require 'dwolla/balance'
 require 'dwolla/funding_sources'
+require 'dwolla/oauth'
+require 'dwolla/offsite_gateway'
 
 # Errors
 require 'dwolla/errors/dwolla_error'
@@ -78,7 +80,7 @@ module Dwolla
         @@api_base + endpoint
     end
 
-    def self.request(method, url, params={}, headers={}, oauth=true)
+    def self.request(method, url, params={}, headers={}, oauth=true, parse_response=true)
         if oauth
             raise AuthenticationError.new('No OAuth Token Provided.') unless token
             params = {
@@ -178,7 +180,13 @@ module Dwolla
         rbody = response.body
         rcode = response.code
 
-        self.parse_response(rbody, rcode)
+        resp = self.extract_json(rbody, rcode)
+
+        if parse_response
+            return self.parse_response(resp, rcode)
+        else
+            return resp
+        end
     end
 
     private
@@ -187,13 +195,18 @@ module Dwolla
         RestClient::Request.execute(opts)
     end
 
-    def self.parse_response(rbody, rcode)
+    def self.extract_json(rbody, rcode)
         begin
             resp = Dwolla::JSON.load(rbody)
-            raise APIError.new(resp['Message']) unless resp['Success']
         rescue MultiJson::DecodeError
             raise APIError.new("There was an error parsing Dwolla's API response: #{rbody.inspect} (HTTP response code was #{rcode})", rcode, rbody)
         end
+
+        return resp
+    end
+
+    def self.parse_response(resp)
+        raise APIError.new(resp['Message']) unless resp['Success']
 
         return resp['Response']
     end
@@ -227,7 +240,6 @@ module Dwolla
     def self.api_error(error, rcode, rbody, error_obj)
         APIError.new(error[:message], rcode, rbody, error_obj)
     end
-
 
     def self.handle_restclient_error(e)
         case e
