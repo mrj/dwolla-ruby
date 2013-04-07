@@ -14,6 +14,8 @@ require 'dwolla/transactions'
 require 'dwolla/requests'
 require 'dwolla/contacts'
 require 'dwolla/users'
+require 'dwolla/balance'
+require 'dwolla/funding_sources'
 
 # Errors
 require 'dwolla/errors/dwolla_error'
@@ -175,19 +177,25 @@ module Dwolla
 
         rbody = response.body
         rcode = response.code
-        begin
-            resp = Dwolla::JSON.load(rbody)
-        rescue MultiJson::DecodeError
-            raise DwollaError.new("Invalid response object from API: #{rbody.inspect} (HTTP response code was #{rcode})", rcode, rbody)
-        end
 
-        resp
+        self.parse_response(rbody, rcode)
     end
 
     private
  
     def self.execute_request(opts)
         RestClient::Request.execute(opts)
+    end
+
+    def self.parse_response(rbody, rcode)
+        begin
+            resp = Dwolla::JSON.load(rbody)
+            raise APIError.new(resp['Message']) unless resp['Success']
+        rescue MultiJson::DecodeError
+            raise APIError.new("There was an error parsing Dwolla's API response: #{rbody.inspect} (HTTP response code was #{rcode})", rcode, rbody)
+        end
+
+        return resp['Response']
     end
 
     def self.handle_api_error(rcode, rbody)
@@ -224,13 +232,13 @@ module Dwolla
     def self.handle_restclient_error(e)
         case e
         when RestClient::ServerBrokeConnection, RestClient::RequestTimeout
-            message = "Could not connect to Stripe (#{@@api_base}).  Please check your internet connection and try again.  If this problem persists, you should check Stripe's service status at https://twitter.com/stripestatus, or let us know at support@stripe.com."
+            message = "Could not connect to Dwolla (#{@@api_base}).  Please check your internet connection and try again.  If this problem persists, you should check Dwolla's service status at https://twitter.com/Dwolla, or let us know at support@Dwolla.com."
         when RestClient::SSLCertificateNotVerified
-            message = "Could not verify Stripe's SSL certificate.  Please make sure that your network is not intercepting certificates.  (Try going to https://api.stripe.com/v1 in your browser.)  If this problem persists, let us know at support@stripe.com."
+            message = "Could not verify Dwolla's SSL certificate. If this problem persists, let us know at support@dwolla.com."
         when SocketError
-            message = "Unexpected error communicating when trying to connect to Stripe.  HINT: You may be seeing this message because your DNS is not working.  To check, try running 'host stripe.com' from the command line."
+            message = "Unexpected error communicating when trying to connect to Dwolla. If this problem persists, let us know at support@dwolla.com."
         else
-            message = "Unexpected error communicating with Stripe.  If this problem persists, let us know at support@stripe.com."
+            message = "Unexpected error communicating with Dwolla. If this problem persists, let us know at support@dwolla.com."
         end
             message += "\n\n(Network error: #{e.message})"
         raise APIConnectionError.new(message)

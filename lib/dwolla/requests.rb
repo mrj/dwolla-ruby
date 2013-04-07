@@ -16,7 +16,7 @@ module Dwolla
         end
 
         def self.delete(id=nil)
-            raise MissingParameterError.new('No Request ID Provided.') unless id
+            raise MissingParameterError.new('No Request ID Provided.') if id.nil?
 
             url = requests_url + id.to_s + '/cancel'
 
@@ -24,11 +24,19 @@ module Dwolla
         end
 
         def self.create(params={})
-            raise MissingParameterError.new('No PIN Provided.') unless params['pin']
-            raise MissingParameterError.new('No Source ID Provided.') unless params['sourceId']
-            raise MissingParameterError.new('No Amount Provided.') unless params['amount']
+            raise MissingParameterError.new('No Source ID Provided.') unless params[:sourceId]
+            raise MissingParameterError.new('No Amount Provided.') unless params[:amount]
 
             url = requests_url
+
+            Dwolla.request(:post, url, params)
+        end
+
+        def self.fulfill(id=nil, params={})
+            raise MissingParameterError.new('No Request ID Provided.') if id.nil?
+            raise MissingParameterError.new('No PIN Provided.') unless params[:pin]
+
+            url = requests_url + id.to_s + '/fulfill'
 
             Dwolla.request(:post, url, params)
         end
