@@ -27,7 +27,7 @@ module Dwolla
 
             params['redirect_uri'] = redirect_uri unless redirect_uri.nil?
 
-            Dwolla.request(:get, token_url, params, {}, false, false)['access_token']
+            Dwolla.request(:get, token_url, params, {}, false, false, true)['access_token']
         end
 
         private

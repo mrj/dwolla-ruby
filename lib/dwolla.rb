@@ -1,4 +1,5 @@
 # Dwolla Ruby API Wrapper
+# Heavily based off Stripe's Ruby Gem
 # API spec at https://developers.dwolla.com
 require 'openssl'
 require 'rest_client'
@@ -17,7 +18,7 @@ require 'dwolla/users'
 require 'dwolla/balance'
 require 'dwolla/funding_sources'
 require 'dwolla/oauth'
-require 'dwolla/offsite_gateway'
+# require 'dwolla/offsite_gateway' // Needs more work
 
 # Errors
 require 'dwolla/errors/dwolla_error'
@@ -52,6 +53,14 @@ module Dwolla
         @@api_secret
     end
 
+    def self.debug
+        @@debug
+    end
+
+    def self.debug=(debug)
+        @@debug = debug
+    end
+
     def self.api_version=(api_version)
         @@api_version = api_version
     end
@@ -80,7 +89,7 @@ module Dwolla
         @@api_base + endpoint
     end
 
-    def self.request(method, url, params={}, headers={}, oauth=true, parse_response=true)
+    def self.request(method, url, params={}, headers={}, oauth=true, parse_response=true, custom_url=false)
         if oauth
             raise AuthenticationError.new('No OAuth Token Provided.') unless token
             params = {
@@ -98,7 +107,7 @@ module Dwolla
             $stderr.puts "WARNING: Running without SSL cert verification."
         else
             ssl_opts = {
-                :verify_ssl => OpenSSL::SSL::VERIFY_PEER
+                :use_ssl => true
             }
         end
 
@@ -113,7 +122,7 @@ module Dwolla
             :uname => uname
         }
 
-        url = self.endpoint_url(url)
+        url = self.endpoint_url(url) unless custom_url
 
         case method.to_s.downcase.to_sym
             when :get
@@ -155,6 +164,12 @@ module Dwolla
             :timeout => 80
         }.merge(ssl_opts)
 
+        if self.debug
+            puts "Firing request with options and headers:"
+            puts opts
+            puts headers
+        end
+
         begin
             response = execute_request(opts)
         rescue SocketError => e
@@ -183,7 +198,7 @@ module Dwolla
         resp = self.extract_json(rbody, rcode)
 
         if parse_response
-            return self.parse_response(resp, rcode)
+            return self.parse_response(resp)
         else
             return resp
         end

@@ -8,7 +8,6 @@ require 'dwolla'
 require '_keys.rb'
 
 # Instantiate a new Dwolla User client
-# And, seed a previously generated access token
 Dwolla::api_key = @api_key
 Dwolla::api_secret = @api_secret
 
