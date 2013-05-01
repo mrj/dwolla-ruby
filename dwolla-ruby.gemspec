@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
     s.email       = ["michael@dwolla.com"]
     s.homepage    = "https://github.com/dwolla/dwolla-ruby"
     s.summary     = %q{Official Ruby Wrapper for Dwolla's API}
-    s.description = %q{Official Ruby Wrapper for Dwolla's API}
+    s.description = %q{Official Ruby Wrapper for Dwolla's API. Completely re-written based on Stripe's Ruby Bindings.}
 
     s.rubyforge_project = "dwolla-ruby"
 
@@ -18,9 +18,7 @@ Gem::Specification.new do |s|
 
     s.add_dependency('rest-client', '~> 1.4')
     s.add_dependency('multi_json', '>= 1.0.4', '< 2')
+    s.add_dependency('addressable', '>= 2')
 
-    s.add_development_dependency('mocha')
-    s.add_development_dependency('shoulda')
-    s.add_development_dependency('test-unit')
     s.add_development_dependency('rake')
 end
