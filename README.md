@@ -2,7 +2,7 @@
 =================================================================================
 
 ## Version
-1.0.0
+2.0.0
 
 ## Requirements
 - [Ruby](http://www.ruby-lang.org/)
@@ -93,7 +93,7 @@ Helper Methods:
 This wrapper is a forked extension of Jefferson Girao's &lt;@jeffersongirao&gt; 'dwolla' module.
 
 - Michael Schonfeld &lt;michael@dwolla.com&gt;
-- Jefferson Girão &lt;contato@jefferson.eti.br&gt;
+- Jefferson Girï¿½o &lt;contato@jefferson.eti.br&gt;
 
 ## Support
 
