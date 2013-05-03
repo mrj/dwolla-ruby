@@ -5,7 +5,7 @@ require 'sinatra'
 require 'dwolla'
 
 # Include any required keys
-require '_keys.rb'
+require './_keys.rb'
 
 # Instantiate a new Dwolla User client
 Dwolla::api_key = @api_key

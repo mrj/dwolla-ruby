@@ -4,11 +4,11 @@ require 'pp'
 require 'dwolla'
 
 # Include any required keys
-require '_keys.rb'
+require './_keys.rb'
 
 # Instantiate a new Dwolla User client
 # And, seed a previously generated access token
-Dwolla::token = $token
+Dwolla::token = @token
 
 
 # EXAMPLE 1: 
@@ -23,10 +23,8 @@ pp transactionId
 
 # EXAMPLE 3: 
 #   Get details about all recent transactions
-transactions = Dwolla::Transactions.get
-pp transactions
+pp Dwolla::Transactions.get
 
 # EXAMPLE 4: 
 #   Get details about a certain Transaction
-transactionId = Dwolla::Transactions.get(transactionId)
-pp transactionId
+pp Dwolla::Transactions.get(transactionId)
