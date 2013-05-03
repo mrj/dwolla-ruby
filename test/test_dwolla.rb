@@ -44,7 +44,7 @@ class TestDwollaRuby < Test::Unit::TestCase
         Dwolla.token=nil
       end
 
-      context "balance tests" do
+      context "balance tests" do 
         should "balance should be retrievable" do
           @mock.expects(:get).once.returns(test_response(test_balance))
           balance = Dwolla::Balance.get
