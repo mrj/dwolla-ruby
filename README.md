@@ -24,9 +24,11 @@ This repo includes various usage examples, including:
 
 * Authenticating with OAuth [oauth.rb]
 * Sending money [send.rb]
-* Fetching account information [accountInfo.rb]
+* Fetching user information [users.rb]
 * Grabbing a user's contacts [contacts.rb]
 * Listing a user's funding sources [fundingSources.rb]
+* Transacting money [transactions.rb]
+* Getting a user's balance [balance.rb]
 
 ## Changelog
 
