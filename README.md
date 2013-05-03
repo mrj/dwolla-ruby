@@ -36,6 +36,12 @@ This repo includes various usage examples, including:
 
 * Reworked Gem.
 
+## Testing
+
+To run the gem's tests:
+
+	bundle exec rake test
+
 ## Credits
 
 This wrapper is heavily based off Stripe's Ruby Gem
