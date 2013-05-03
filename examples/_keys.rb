@@ -1,5 +1,5 @@
 # Dwolla Secret Stuff
-$apiKey = ''
-$apiSecret = ''
-$token = ''
-$pin = ''
+@api_key = ''
+@api_secret = ''
+@token = ''
+@pin = ''
