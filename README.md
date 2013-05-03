@@ -1,6 +1,8 @@
 # dwolla-ruby: Ruby Wrapper for Dwolla's API
 =================================================================================
 
+[![Build Status](https://travis-ci.org/dwolla/dwolla-ruby.png)](https://travis-ci.org/dwolla/dwolla-ruby)
+
 ## Version
 2.1.0
 
