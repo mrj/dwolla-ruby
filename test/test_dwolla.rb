@@ -54,7 +54,7 @@ class TestDwollaRuby < Test::Unit::TestCase
 
       context "contacts tests" do
         should "be able to get a user's contacts" do
-          @mock.expects(:get).once.returns(test_response(test_users_array))
+          @mock.expects(:get).once.returns(test_response(test_contacts_array))
           contacts = Dwolla::Contacts.get
           assert contacts.kind_of? Array
         end
@@ -62,7 +62,7 @@ class TestDwollaRuby < Test::Unit::TestCase
 
       context "funding sources tests" do
         should "should be able to get a user's funding source by its id" do
-          @mock.expects(:get).once.returns(test_response(test_fundingsource))
+          @mock.expects(:get).once.returns(test_response(test_fundingsource_byid))
           fundingsource = Dwolla::FundingSources.get('funding_source_id')
           assert fundingsource.kind_of? Object
         end
@@ -102,7 +102,7 @@ class TestDwollaRuby < Test::Unit::TestCase
         end
 
         should "should be able to get a user's pending money request by its id" do
-          @mock.expects(:get).once.returns(test_response(test_request))
+          @mock.expects(:get).once.returns(test_response(test_request_byid))
           request = Dwolla::Requests.get('request_id')
           assert request.kind_of? Object
         end
@@ -114,17 +114,21 @@ class TestDwollaRuby < Test::Unit::TestCase
         end
 
         should "should be able to create a new money request for a user" do
-
+          @mock.expects(:post).once.returns(test_response(test_request))
+          request = Dwolla::Requests.request({:pin => 1111, :amount => 0.01, :sourceId => 'alex@dwolla.com'})
+          assert request.kind_of? Integer
         end
 
         should "should be a able to fulfill a user's pending money request" do
-
+          @mock.expects(:post).once.returns(test_response(test_request_fulfill))
+          request = Dwolla::Requests.fulfill('2219682', {:pin => 1111})
+          assert request.kind_of? Object
         end
       end
 
       context "transactions tests" do
         should "should be able to get a user's transaction information by its id" do
-          @mock.expects(:get).once.returns(test_response(test_transaction))
+          @mock.expects(:get).once.returns(test_response(test_transaction_byid))
           transactions = Dwolla::Transactions.get('transaction_id')
           assert transactions.kind_of? Object
         end
@@ -136,19 +140,21 @@ class TestDwollaRuby < Test::Unit::TestCase
         end
 
         should "should be able to get a user's transaction statistics" do
-          @mock.expects(:post).once.returns(test_response(test_send))
-          send = Dwolla::Transactions.send({:pin => 1111, :destinationId => '812-734-7288', :amount => 0.01})
-          assert send.kind_of? Int
+          @mock.expects(:get).once.returns(test_response(test_transactions_stats))
+          stats = Dwolla::Transactions.stats
+          assert stats.kind_of? Object
         end
 
         should "should be able to send money from a user's account" do
-
+          @mock.expects(:post).once.returns(test_response(test_send))
+          send = Dwolla::Transactions.send({:pin => 1111, :destinationId => '812-734-7288', :amount => 0.01})
+          assert send.kind_of? Integer
         end
       end
 
       context "users tests" do
         should "should be able to get a user's information" do
-          @mock.expects(:get).once.returns(test_response(test_user))
+          @mock.expects(:get).once.returns(test_response(test_user_self))
           user = Dwolla::Users.me
           assert user.kind_of? Object
         end
@@ -168,17 +174,23 @@ class TestDwollaRuby < Test::Unit::TestCase
 
       context "contacts tests" do
         should "be able to get a list of nearby spots" do
-
+          @mock.expects(:get).once.returns(test_response(test_contacts_array))
+          spots = Dwolla::Contacts.nearby
+          assert spots.kind_of? Array
         end
       end
 
       context "users tests" do
         should "should be able to get any user's information" do
-
+          @mock.expects(:get).once.returns(test_response(test_user_byid))
+          user = Dwolla::Users.get('alex@dwolla.com')
+          assert user.kind_of? Object
         end
 
         should "should be able to get a list of nearby users" do
-
+          @mock.expects(:get).once.returns(test_response(test_users_array))
+          users = Dwolla::Users.nearby
+          assert users.kind_of? Array
         end
       end
     end

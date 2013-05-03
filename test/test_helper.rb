@@ -34,7 +34,7 @@ def test_response(body, code=200)
   m
 end
 
-def test_transaction(params={})
+def test_transaction_byid(params={})
   {
     :Success => true,
     :Message => 'Success',
@@ -95,6 +95,19 @@ def test_transactions_array(params={})
   }.merge(params)
 end
 
+def test_transactions_stats(params={})  
+  {
+    :Success => true,
+    :Message => 'Success',
+    :Response => [
+      {
+        :TransactionsCount => 3,
+        :TransactionsTotal => 0.03
+      }
+    ]
+  }.merge(params)
+end
+
 def test_balance(params={})
   {
     :Success => true,
@@ -112,6 +125,14 @@ def test_send(params={})
 end
 
 def test_request(params={})
+  {
+    :Success => true,
+    :Message => 'Success',
+    :Response => 2221134
+  }.merge(params)
+end
+
+def test_request_byid(params={})
   {
     :Success => true,
     :Message => 'Success',
@@ -184,7 +205,42 @@ def test_requests_array(params={})
   }.merge(params)
 end
 
-def test_fundingsource(params={})
+def test_request_cancel(params={})
+  {
+    :Success => true,
+    :Message => 'Success',
+    :Response => ''
+  }.merge(params)
+end
+
+def test_request_fulfill(params={})
+  {
+    :Success => true,
+    :Message => 'Success',
+    :Response => {
+      :Id => 2844131,
+      :RequestId => 2219682,
+      :Source => {
+        :Id => "812-734-7288",
+        :Name => "Michael Schonfeld",
+        :Type => "Dwolla",
+        :Image => nil
+      },
+      :Destination => {
+        :Id => "812-726-8148",
+        :Name => "Paul Liberman",
+        :Type => "Dwolla",
+        :Image => nil
+      },
+      :Amount => 1,
+      :SentDate => "5/3/2013 10:55:56 AM",
+      :ClearingDate => "5/3/2013 10:55:56 AM",
+      :Status => "processed"
+    }
+  }.merge(params)
+end
+
+def test_fundingsource_byid(params={})
   {
     :Success => true,
     :Message => 'Success',
@@ -196,14 +252,6 @@ def test_fundingsource(params={})
       :Verified => true,
       :ProcessingType => "FiSync"
     }
-  }.merge(params)
-end
-
-def test_test_request_cancel(params={})
-  {
-    :Success => true,
-    :Message => 'Success',
-    :Response => ''
   }.merge(params)
 end
 
@@ -251,6 +299,7 @@ def test_fundingsource_withdraw(params={})
     }
   }.merge(params)
 end
+
 def test_fundingsource_deposit(params={})
   {
     :Success => true,
@@ -273,7 +322,7 @@ def test_fundingsource_deposit(params={})
   }.merge(params)
 end
 
-def test_user(params={})
+def test_user_self(params={})
   {
     :Success => true,
     :Message => 'Success',
@@ -285,6 +334,21 @@ def test_user(params={})
       :Name => "Codeacademy Course",
       :Latitude => 0,
       :Longitude => 0
+    }
+  }.merge(params)
+end
+
+def test_user_byid(params={})
+  {
+    :Success => true,
+    :Message => 'Success',
+    :Response => {
+      :Name => "Alex Hart",
+      :Id => "812-499-5823",
+      :Type => "Dwolla",
+      :Image => "https://www.dwolla.com/avatars/812-499-5823",
+      :City => nil,
+      :State => nil
     }
   }.merge(params)
 end
@@ -309,6 +373,43 @@ def test_users_array(params={})
         :Image => "https://www.dwolla.com/avatars/812-626-8794",
         :City => nil,
         :State => nil
+      }
+    ]
+  }.merge(params)
+end
+
+def test_contacts_array(params={})
+  {
+    :Success => true,
+    :Message => 'Success',
+    :Response => [
+      {
+        :Name => "Pinnacle Marketing",
+        :Id => "812-464-9495",
+        :Type => "Dwolla",
+        :Image => "https://www.dwolla.com/avatars/812-464-9495",
+        :Latitude => 0,
+        :Longitude => 0,
+        :Address => "Box 311\n134 Moore Hill Road",
+        :City => "Newbury",
+        :State => "VT",
+        :PostalCode => "05051",
+        :Group => "812-534-7970,812-530-2592,812-451-7983,812-554-6122,812-499-3232,812-475-9151,812-568-7828,812-518-8055,812-514-9530",
+        :Delta => 0
+      },
+      {
+        :Name => "CMS Plus Hosting LLC",
+        :Id => "812-534-7970",
+        :Type => "Dwolla",
+        :Image => "https://www.dwolla.com/avatars/812-534-7970",
+        :Latitude => 0,
+        :Longitude => 0,
+        :Address => "20 E BEECH\nPO BOX 47",
+        :City => "Cedar Springs",
+        :State => "MI",
+        :PostalCode => "49319",
+        :Group => "812-464-9495,812-530-2592,812-451-7983,812-554-6122,812-499-3232,812-475-9151,812-568-7828,812-518-8055,812-514-9530",
+        :Delta => 0
       }
     ]
   }.merge(params)
