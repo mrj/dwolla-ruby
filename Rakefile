@@ -1,5 +1,9 @@
-require 'bundler/gem_tasks'
-require 'rspec/core/rake_task'
+task :default => [:test]
 
-desc "Run specs"
-RSpec::Core::RakeTask.new
+task :test do
+  ret = true
+  Dir["test/**/*.rb"].each do |f|
+    ret = ret && ruby(f, '')
+  end
+  exit(ret)
+end

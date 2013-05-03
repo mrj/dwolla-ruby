@@ -13,12 +13,15 @@ Gem::Specification.new do |s|
     s.rubyforge_project = "dwolla-ruby"
 
     s.files         = `git ls-files`.split("\n")
-    s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+    s.test_files    = `git ls-files -- test/*`.split("\n")
     s.require_paths = %w{lib}
 
     s.add_dependency('rest-client', '~> 1.4')
     s.add_dependency('multi_json', '>= 1.0.4', '< 2')
     s.add_dependency('addressable', '>= 2')
 
+    s.add_development_dependency('mocha')
+    s.add_development_dependency('shoulda')
+    s.add_development_dependency('test-unit')
     s.add_development_dependency('rake')
 end

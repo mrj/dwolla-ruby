@@ -2,7 +2,7 @@
 =================================================================================
 
 ## Version
-2.0.0
+2.1.0
 
 ## Requirements
 - [Ruby](http://www.ruby-lang.org/)
@@ -27,6 +27,10 @@ This repo includes various usage examples, including:
 * Listing a user's funding sources [fundingSources.rb]
 
 ## Changelog
+
+2.1.0
+
+* Add tests! (OMG WOOT JK </LOL>)
 
 2.0.0
 
