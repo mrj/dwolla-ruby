@@ -32,6 +32,10 @@ This repo includes various usage examples, including:
 
 ## Changelog
 
+2.1.1
+
+* Oops. POST request wasn't actually sending any params.
+
 2.1.0
 
 * Add tests! (OMG WOOT JK </LOL>)
@@ -61,7 +65,7 @@ This wrapper is heavily based off Stripe's Ruby Gem
 
 http://developers.dwolla.com/dev
 
-## License 
+## License
 
 (The MIT License)
 

@@ -90,12 +90,14 @@ module Dwolla
     end
 
     def self.request(method, url, params={}, headers={}, oauth=true, parse_response=true, custom_url=false)
-        if oauth
+        if oauth and not params[:oauth_token]
             raise AuthenticationError.new('No OAuth Token Provided.') unless token
             params = {
                 :oauth_token => token
             }.merge(params)
-        else
+        elsif oauth and params[:oauth_token]
+            raise AuthenticationError.new('No OAuth Token Provided.') unless params[:oauth_token]
+        else not oauth
             raise AuthenticationError.new('No App Key & Secret Provided.') unless (api_key && api_secret)
             params = {
                 :client_id => api_key,
@@ -134,7 +136,7 @@ module Dwolla
                 end
                 payload = nil
             else
-                payload = ''
+                payload = JSON.dump(params)
         end
 
         begin
@@ -205,7 +207,7 @@ module Dwolla
     end
 
     private
- 
+
     def self.execute_request(opts)
         RestClient::Request.execute(opts)
     end
