@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/Dwolla/dwolla-ruby.png?branch=master)](https://travis-ci.org/Dwolla/dwolla-ruby)
 
 ## Version
-2.1.0
+2.1.1
 
 ## Requirements
 - [Ruby](http://www.ruby-lang.org/)
