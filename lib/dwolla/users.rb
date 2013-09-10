@@ -1,24 +1,24 @@
 module Dwolla
     class Users
-        def self.get(id=nil)
+        def self.get(id=nil, token=nil)
             url = users_url
 
             unless id.nil?
                 url += id.to_s
                 @oauth = false
             else
-                @oauth = true
+                @oauth = token.nil? ? true : token
             end
 
             Dwolla.request(:get, url, {}, {}, @oauth)
         end
 
-        def self.me
+        def self.me(token=nil)
             # I'm not using the 'alias_method' fn
             # because the .me method should not
             # honor any parameters (i.e. User IDs)
             # passed to it
-            self.get
+            self.get(nil, token)
         end
 
         def self.nearby(filters={})

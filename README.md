@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/Dwolla/dwolla-ruby.png?branch=master)](https://travis-ci.org/Dwolla/dwolla-ruby)
 
 ## Version
-2.1.1
+2.4.1
 
 ## Requirements
 - [Ruby](http://www.ruby-lang.org/)
@@ -31,6 +31,24 @@ This repo includes various usage examples, including:
 * Getting a user's balance [balance.rb]
 
 ## Changelog
+
+2.4.2
+
+* Fix OAuth token override
+
+2.4.1
+
+* Show raw response on debug mode
+* Add support for 'Accounts' API
+* Raise APIError when OAuth's get_token fails
+
+2.4.0
+
+* Added support for inline passage of OAuth tokens
+
+2.3.0
+
+* Add support for "sandbox" / UAT mode
 
 2.1.1
 

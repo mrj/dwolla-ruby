@@ -14,7 +14,7 @@ Dwolla::api_secret = @api_secret
 # Constants...
 redirect_uri = 'http://localhost:4567/oauth_return'
 
-# STEP 1: 
+# STEP 1:
 #   Create an authentication URL
 #   that the user will be redirected to
 get '/' do
@@ -23,7 +23,7 @@ get '/' do
 end
 
 
-# STEP 2: 
+# STEP 2:
 #   Exchange the temporary code given
 #   to us in the querystring, for
 #   a never-expiring OAuth access token

@@ -18,7 +18,9 @@ require 'dwolla/users'
 require 'dwolla/balance'
 require 'dwolla/funding_sources'
 require 'dwolla/oauth'
-# require 'dwolla/offsite_gateway' // Needs more work
+require 'dwolla/offsite_gateway'
+require 'dwolla/accounts'
+# require 'dwolla/register' // Under Construction
 
 # Errors
 require 'dwolla/errors/dwolla_error'
@@ -32,10 +34,11 @@ module Dwolla
     @@api_key = nil
     @@api_secret = nil
     @@token = nil
-    @@api_base = 'https://www.dwolla.com/oauth/rest'
+    @@api_base = '/oauth/rest'
     @@verify_ssl_certs = true
     @@api_version = nil
     @@debug = false
+    @@sandbox = false
 
     def self.api_key=(api_key)
         @@api_key = api_key
@@ -51,6 +54,14 @@ module Dwolla
 
     def self.api_secret
         @@api_secret
+    end
+
+    def self.sandbox=(sandbox)
+        @@sandbox = sandbox
+    end
+
+    def self.sandbox
+        @@sandbox
     end
 
     def self.debug
@@ -85,16 +96,34 @@ module Dwolla
         @@token
     end
 
+    def self.hostname
+        if not @@sandbox
+            return 'https://www.dwolla.com'
+        else
+            return 'http://uat.dwolla.com'
+        end
+    end
+
     def self.endpoint_url(endpoint)
-        @@api_base + endpoint
+        self.hostname + @@api_base + endpoint
     end
 
     def self.request(method, url, params={}, headers={}, oauth=true, parse_response=true, custom_url=false)
+        # if oauth is nil, assume default [true]
+        oauth = true if oauth.nil?
+
+        # figure out which auth to use
         if oauth and not params[:oauth_token]
-            raise AuthenticationError.new('No OAuth Token Provided.') unless token
-            params = {
-                :oauth_token => token
-            }.merge(params)
+            if not oauth.is_a?(TrueClass) # was token passed in the oauth param?
+                params = {
+                    :oauth_token => oauth
+                }.merge(params)
+            else
+                raise AuthenticationError.new('No OAuth Token Provided.') unless token
+                params = {
+                    :oauth_token => token
+                }.merge(params)
+            end
         elsif oauth and params[:oauth_token]
             raise AuthenticationError.new('No OAuth Token Provided.') unless params[:oauth_token]
         else not oauth
@@ -167,6 +196,10 @@ module Dwolla
         }.merge(ssl_opts)
 
         if self.debug
+            if self.sandbox
+                puts "[DWOLLA SANDBOX MODE OPERATION]"
+            end
+
             puts "Firing request with options and headers:"
             puts opts
             puts headers
@@ -196,6 +229,13 @@ module Dwolla
 
         rbody = response.body
         rcode = response.code
+
+        if self.debug
+            puts "Raw response headers received:"
+            puts headers
+            puts "Raw response body received:"
+            puts rbody
+        end
 
         resp = self.extract_json(rbody, rcode)
 

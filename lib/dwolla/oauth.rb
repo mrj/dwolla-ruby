@@ -14,6 +14,10 @@ module Dwolla
             uri = Addressable::URI.new
             uri.query_values = params
 
+            if Dwolla::debug and Dwolla::sandbox
+                puts "[DWOLLA SANDBOX MODE OPERATION]"
+            end
+
             return auth_url + '?' + uri.query
         end
 
@@ -27,17 +31,21 @@ module Dwolla
 
             params['redirect_uri'] = redirect_uri unless redirect_uri.nil?
 
-            Dwolla.request(:get, token_url, params, {}, false, false, true)['access_token']
+            resp = Dwolla.request(:get, token_url, params, {}, false, false, true)
+
+            raise APIError.new(resp['error_description']) unless resp['access_token']
+
+            return resp['access_token']
         end
 
         private
 
         def self.auth_url
-            return 'https://www.dwolla.com/oauth/v2/authenticate'
+            Dwolla.hostname + '/oauth/v2/authenticate'
         end
 
         def self.token_url
-            return 'https://www.dwolla.com/oauth/v2/token'
+            Dwolla.hostname + '/oauth/v2/token'
         end
     end
 end

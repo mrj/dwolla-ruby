@@ -1,6 +1,6 @@
 module Dwolla
     class Transactions
-        def self.get(id=nil, filters={})
+        def self.get(id=nil, filters={}, token=nil)
             url = transactions_url
 
             if id.is_a?(Hash)
@@ -12,23 +12,23 @@ module Dwolla
 
             url += id.to_s unless id.nil?
 
-            Dwolla.request(:get, url, filters)
+            Dwolla.request(:get, url, filters, {}, token)
         end
 
-        def self.stats(filters={})
+        def self.stats(filters={}, token=nil)
             url = transactions_url + 'stats'
 
-            Dwolla.request(:get, url, filters)
+            Dwolla.request(:get, url, filters, {}, token)
         end
 
-        def self.create(params={})
+        def self.create(params={}, token=nil)
             raise MissingParameterError.new('No PIN Provided.') unless params[:pin]
             raise MissingParameterError.new('No Destination ID Provided.') unless params[:destinationId]
             raise MissingParameterError.new('No Amount Provided.') unless params[:amount]
 
             url = transactions_url + 'send'
 
-            Dwolla.request(:post, url, params)
+            Dwolla.request(:post, url, params, {}, token)
         end
 
         def self.guest_send(params={})

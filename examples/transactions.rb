@@ -28,3 +28,11 @@ pp Dwolla::Transactions.get
 # EXAMPLE 4:
 #   Get details about a certain Transaction
 pp Dwolla::Transactions.get(transactionId)
+
+# EXAMPLE 4:
+#   Get details about a certain Transaction
+#   using the API key & secret
+Dwolla::token = ''
+Dwolla::api_key = @api_key
+Dwolla::api_secret = @api_secret
+pp Dwolla::Transactions.get(transactionId, {}, false)
