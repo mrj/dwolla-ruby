@@ -141,7 +141,7 @@ module Dwolla
             total = 0.0
 
             @products.each { |product|
-              total += product[:price] * product[:quantity]
+                total += product[:price] * product[:quantity]
             }
 
             total += @shipping
