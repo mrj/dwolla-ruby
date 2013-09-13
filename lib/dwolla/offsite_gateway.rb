@@ -138,17 +138,17 @@ module Dwolla
         end
 
         def self.calculate_total
-            total = 0
+            total = 0.0
 
             @products.each { |product|
-                total += product[:price] * product[:quantity]
+              total += product[:price] * product[:quantity]
             }
 
             total += @shipping
             total += @tax
             total += @discount
 
-            return total
+            return total.round(2)
         end
     end
 end
