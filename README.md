@@ -32,6 +32,10 @@ This repo includes various usage examples, including:
 
 ## Changelog
 
+2.4.3
+
+* Add missing files [accounts.rb]
+
 2.4.2
 
 * Fix OAuth token override

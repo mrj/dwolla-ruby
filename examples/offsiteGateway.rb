@@ -1,9 +1,7 @@
-$:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
-
 # Include the Dwolla gem
 require 'rubygems'
 require 'pp'
-require '../lib/dwolla'
+require 'dwolla'
 
 # Include any required keys
 require './_keys.rb'
@@ -11,7 +9,6 @@ require './_keys.rb'
 # Instantiate a new Dwolla User client
 Dwolla::api_key = @api_key
 Dwolla::api_secret = @api_secret
-Dwolla::debug = false
 
 # Clear out any previous session data
 Dwolla::OffsiteGateway.clear_session
