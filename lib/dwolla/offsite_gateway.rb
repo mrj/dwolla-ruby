@@ -5,10 +5,10 @@ module Dwolla
         @tax = 0
         @shipping = 0
         @notes = nil
-        @facilitatorAmount = nil
+        @facilitator_amount = nil
         @testMode = false
-        @allowFundingSources = true
-        @orderId = nil
+        @allow_funding_sources = true
+        @order_id = nil
 
         def self.clear_session
             @products = []
@@ -16,10 +16,22 @@ module Dwolla
             @tax = 0
             @shipping = 0
             @notes = nil
-            @facilitatorAmount = nil
+            @facilitator_amount = nil
             @testMode = false
-            @allowFundingSources = true
-            @orderId = nil
+            @allow_funding_sources = true
+            @order_id = nil
+        end
+
+        class << self
+            attr_writer :tax
+            attr_writer :shipping
+            attr_writer :notes
+            attr_writer :order_id
+            attr_writer :redirect
+            attr_writer :callback
+            attr_writer :test
+            attr_writer :allow_funding_sources
+            attr_writer :facilitator_amount
         end
 
         def self.add_product(name=nil, description=nil, price=nil, quantity=1)
@@ -46,47 +58,20 @@ module Dwolla
             @discount = -(discount.abs)
         end
 
-        def self.tax=(tax)
-            @tax = tax
-        end
-
-        def self.shipping=(shipping)
-            @shipping = shipping
-        end
-
-        def self.notes=(notes)
-            @notes = notes
-        end
-
-        def self.order_id=(order_id)
-            @orderId = order_id
-        end
-
-        def self.redirect=(redirect)
-            @redirect = redirect
-        end
-
-        def self.callback=(callback)
-            @callback = callback
-        end
-
-        def self.test=(test)
-            @testMode = test
-        end
-
         def self.get_checkout_url(destinationId)
             params = {
                 :key => Dwolla::api_key,
                 :secret => Dwolla::api_secret,
-                :allowFundingSources => @allowFundingSources,
+                :allowFundingSources => @allow_funding_sources,
                 :test => @testMode,
                 :callback => @callback,
                 :redirect => @redirect,
-                :orderId => @orderId,
+                :orderId => @order_id,
                 :purchaseOrder => {
                     :customerInfo => @customerInfo,
                     :destinationId => destinationId,
                     :orderItems => @products,
+                    :facilitatorAmount => @facilitator_amount,
                     :discount => @discount,
                     :shipping => @shipping,
                     :tax => @tax,
