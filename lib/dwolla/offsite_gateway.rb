@@ -67,7 +67,7 @@ module Dwolla
                 :callback => @callback,
                 :redirect => @redirect,
                 :orderId => @order_id,
-                :notes => @notes
+                :notes => @notes,
                 :purchaseOrder => {
                     :customerInfo => @customerInfo,
                     :destinationId => destinationId,
