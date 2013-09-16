@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/Dwolla/dwolla-ruby.png?branch=master)](https://travis-ci.org/Dwolla/dwolla-ruby)
 
 ## Version
-2.4.4
+2.4.5
 
 ## Requirements
 - [Ruby](http://www.ruby-lang.org/)
@@ -31,6 +31,11 @@ This repo includes various usage examples, including:
 * Getting a user's balance [balance.rb]
 
 ## Changelog
+
+2.4.5 [merge pull request by [dustMason0](https://github.com/dustMason)]
+
+* Fix floating point calculation errors
+* Refactor the offsite gateway class
 
 2.4.4
 

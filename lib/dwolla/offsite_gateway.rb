@@ -6,7 +6,7 @@ module Dwolla
         @shipping = 0
         @notes = nil
         @facilitator_amount = nil
-        @testMode = false
+        @test_mode = false
         @allow_funding_sources = true
         @order_id = nil
 
@@ -17,7 +17,7 @@ module Dwolla
             @shipping = 0
             @notes = nil
             @facilitator_amount = nil
-            @testMode = false
+            @test_mode = false
             @allow_funding_sources = true
             @order_id = nil
         end
@@ -29,7 +29,7 @@ module Dwolla
             attr_writer :order_id
             attr_writer :redirect
             attr_writer :callback
-            attr_writer :test
+            attr_writer :test_mode
             attr_writer :allow_funding_sources
             attr_writer :facilitator_amount
         end
@@ -63,10 +63,11 @@ module Dwolla
                 :key => Dwolla::api_key,
                 :secret => Dwolla::api_secret,
                 :allowFundingSources => @allow_funding_sources,
-                :test => @testMode,
+                :test => @test_mode,
                 :callback => @callback,
                 :redirect => @redirect,
                 :orderId => @order_id,
+                :notes => @notes
                 :purchaseOrder => {
                     :customerInfo => @customerInfo,
                     :destinationId => destinationId,
@@ -78,6 +79,8 @@ module Dwolla
                     :total => self.calculate_total
                 }
             }
+
+            pp params
 
             resp = Dwolla.request(:post, request_url, params, {}, false, false, true)
             raise APIError.new(resp['Message']) unless resp['Result'] == 'Success'
