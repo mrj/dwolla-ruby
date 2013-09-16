@@ -39,6 +39,7 @@ module Dwolla
     @@api_version = nil
     @@debug = false
     @@sandbox = false
+    @@scope = 'send|transactions|balance|request|contacts|accountinfofull|funding'
 
     def self.api_key=(api_key)
         @@api_key = api_key
@@ -94,6 +95,14 @@ module Dwolla
 
     def self.token
         @@token
+    end
+
+    def self.scope=(scope)
+        @@scope = scope
+    end
+
+    def self.scope
+        @@scope
     end
 
     def self.hostname

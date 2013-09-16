@@ -1,6 +1,6 @@
 module Dwolla
     class OAuth
-        def self.get_auth_url(redirect_uri=nil, scope='send|transactions|balance|request|contacts|accountinfofull|funding')
+        def self.get_auth_url(redirect_uri=nil, scope=Dwolla::scope)
             raise AuthenticationError.new('No Api Key Provided.') unless Dwolla::api_key
 
             params = {
