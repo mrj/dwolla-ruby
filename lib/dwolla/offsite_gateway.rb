@@ -80,8 +80,6 @@ module Dwolla
                 }
             }
 
-            pp params
-
             resp = Dwolla.request(:post, request_url, params, {}, false, false, true)
             raise APIError.new(resp['Message']) unless resp['Result'] == 'Success'
 
