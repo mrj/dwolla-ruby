@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/Dwolla/dwolla-ruby.png?branch=master)](https://travis-ci.org/Dwolla/dwolla-ruby)
 
 ## Version
-2.4.6
+2.4.7
 
 ## Requirements
 - [Ruby](http://www.ruby-lang.org/)
@@ -31,6 +31,10 @@ This repo includes various usage examples, including:
 * Getting a user's balance [balance.rb]
 
 ## Changelog
+
+2.4.7 [merge pull request by [dustMason0](https://github.com/dustMason)]
+
+* Remove debugging reference to 'pp' (thanks, dustMason)
 
 2.4.6
 
