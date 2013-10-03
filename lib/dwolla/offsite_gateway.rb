@@ -96,7 +96,7 @@ module Dwolla
             return data
         end
 
-        def self.verify_webhook_signature(body, signature)
+        def self.validate_webhook(signature, body)
             verify_webhook_signature(signature, body)
         end
 
