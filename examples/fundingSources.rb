@@ -24,13 +24,13 @@ pp Dwolla::FundingSources.get
 pp Dwolla::FundingSources.get('funding_source_id')
 
 # EXAMPLE 3:
-#   Deposit funds from a Dwolla account balance
-#   into a funding source.
+#   Deposit funds from a funding source (bank account)
+#   into the Dwolla account balance.
 pp Dwolla::FundingSources.deposit('funding_source_id', {:amount => 12.95, :pin => @pin})
 
 # EXAMPLE 4:
-#   Withdraw funds from a funding source into
-#   a Dwolla account balance.
+#   Withdraw funds from a Dwolla account balance into
+#   a funding source (bank account)
 pp Dwolla::FundingSources.withdraw('funding_source_id', {:amount => 12.95, :pin => @pin})
 
 # EXAMPLE 5:
