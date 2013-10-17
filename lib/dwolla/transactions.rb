@@ -31,6 +31,17 @@ module Dwolla
             Dwolla.request(:post, url, params, {}, token)
         end
 
+        def self.refund(params={}, token=nil)
+            raise MissingParameterError.new('No PIN Provided.') unless params[:pin]
+            raise MissingParameterError.new('No Funding Source Provided.') unless params[:fundsSource]
+            raise MissingParameterError.new('No Transaction ID Provided.') unless params[:transactionId]
+            raise MissingParameterError.new('No Amount Provided.') unless params[:amount]
+
+            url = transactions_url + 'refund'
+
+            Dwolla.request(:post, url, params, {}, token)
+        end
+
         def self.guest_send(params={})
             raise MissingParameterError.new('No Destination ID Provided.') unless params[:destinationId]
             raise MissingParameterError.new('No Amount Provided.') unless params[:amount]

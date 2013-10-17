@@ -1,7 +1,7 @@
 # dwolla-ruby: Ruby Wrapper for Dwolla's API
 
 ## Version
-2.4.7
+2.5.0
 
 ## Requirements
 - [Ruby](http://www.ruby-lang.org/)
@@ -17,6 +17,8 @@ The recommended way to install dwolla-ruby is through RubyGems:
 
 ## Examples / Quickstart
 
+To use the examples in the /examples folder, first edit the _keys.rb file and add your Dwolla API application's key, and secret, along with your account's [OAuth token](https://developers.dwolla.com/dev/token), and PIN.
+
 This repo includes various usage examples, including:
 
 * Authenticating with OAuth [oauth.rb]
@@ -28,6 +30,10 @@ This repo includes various usage examples, including:
 * Getting a user's balance [balance.rb]
 
 ## Changelog
+
+2.5.0
+
+* Add refund API endpoint
 
 2.4.7 [merge pull request by [dustMason0](https://github.com/dustMason)]
 
