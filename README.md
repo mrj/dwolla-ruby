@@ -1,4 +1,5 @@
-# dwolla-ruby: Ruby Wrapper for Dwolla's API
+# dwolla-ruby
+Official Ruby wrapper for Dwolla's API
 
 ## Version
 2.5.0
