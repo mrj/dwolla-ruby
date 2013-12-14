@@ -8,6 +8,7 @@ module Dwolla
         @facilitator_amount = nil
         @test_mode = false
         @allow_funding_sources = true
+        @additional_funding_sources = true
         @order_id = nil
 
         def self.clear_session
@@ -19,6 +20,7 @@ module Dwolla
             @facilitator_amount = nil
             @test_mode = false
             @allow_funding_sources = true
+            @additional_funding_sources = true
             @order_id = nil
         end
 
@@ -31,6 +33,7 @@ module Dwolla
             attr_writer :callback
             attr_writer :test_mode
             attr_writer :allow_funding_sources
+            attr_writer :additional_funding_sources
             attr_writer :facilitator_amount
         end
 
@@ -63,6 +66,7 @@ module Dwolla
                 :key => Dwolla::api_key,
                 :secret => Dwolla::api_secret,
                 :allowFundingSources => @allow_funding_sources,
+                :additionalFundingSources => @additional_funding_sources,
                 :test => @test_mode,
                 :callback => @callback,
                 :redirect => @redirect,
