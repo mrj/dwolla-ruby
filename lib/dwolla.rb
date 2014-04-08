@@ -109,7 +109,7 @@ module Dwolla
         if not @@sandbox
             return 'https://www.dwolla.com'
         else
-            return 'http://uat.dwolla.com'
+            return 'https://uat.dwolla.com'
         end
     end
 
