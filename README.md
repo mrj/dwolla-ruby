@@ -2,7 +2,7 @@
 Official Ruby wrapper for Dwolla's API
 
 ## Version
-2.5.1
+2.5.2
 
 ## Requirements
 - [Ruby](http://www.ruby-lang.org/)
@@ -31,6 +31,10 @@ This repo includes various usage examples, including:
 * Getting a user's balance [balance.rb]
 
 ## Changelog
+
+2.5.2
+
+* Sandbox base URL is now HTTPS
 
 2.5.1
 
