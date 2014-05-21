@@ -32,6 +32,10 @@ This repo includes various usage examples, including:
 
 ## Changelog
 
+2.5.3
+
+* Updated offsite gateway to support UAT URL return when sandbox flag is toggled. 
+
 2.5.2
 
 * Sandbox base URL is now HTTPS
