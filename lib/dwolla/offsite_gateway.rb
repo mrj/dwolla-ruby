@@ -120,11 +120,17 @@ module Dwolla
         end
 
         def self.request_url
-            return 'https://www.dwolla.com/payment/request'
+            if Dwolla::sandbox
+                return 'https://www.uat.dwolla.com/payment/request'
+            else
+                return 'https://www.dwolla.com/payment/request'
         end
 
         def self.checkout_url
-            return 'https://www.dwolla.com/payment/checkout/'
+            if Dwolla::sandbox
+                return 'https://www.uat.dwolla.com/payment/request'
+            else
+                return 'https://www.dwolla.com/payment/request'
         end
 
         def self.calculate_total
