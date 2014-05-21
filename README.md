@@ -2,7 +2,7 @@
 Official Ruby wrapper for Dwolla's API
 
 ## Version
-2.5.3
+2.5.4
 
 ## Requirements
 - [Ruby](http://www.ruby-lang.org/)
@@ -31,6 +31,10 @@ This repo includes various usage examples, including:
 * Getting a user's balance [balance.rb]
 
 ## Changelog
+
+2.5.4
+
+* Fixed offsite gateway URL (www.uat.dwolla.com is invalid whereas uat.dwolla.com is not).
 
 2.5.3
 
