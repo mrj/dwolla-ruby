@@ -2,7 +2,7 @@
 Official Ruby wrapper for Dwolla's API
 
 ## Version
-2.5.2
+2.5.3
 
 ## Requirements
 - [Ruby](http://www.ruby-lang.org/)
