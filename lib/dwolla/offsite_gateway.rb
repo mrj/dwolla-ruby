@@ -124,6 +124,7 @@ module Dwolla
                 return 'https://uat.dwolla.com/payment/request'
             else
                 return 'https://www.dwolla.com/payment/request'
+            end
         end
 
         def self.checkout_url
@@ -131,6 +132,7 @@ module Dwolla
                 return 'https://uat.dwolla.com/payment/request'
             else
                 return 'https://www.dwolla.com/payment/request'
+            end
         end
 
         def self.calculate_total
