@@ -2,7 +2,7 @@
 Official Ruby wrapper for Dwolla's API
 
 ## Version
-2.5.4
+2.5.5
 
 ## Requirements
 - [Ruby](http://www.ruby-lang.org/)
@@ -31,6 +31,10 @@ This repo includes various usage examples, including:
 * Getting a user's balance [balance.rb]
 
 ## Changelog
+
+2.5.5
+
+* Pulled in a merge request for syntax error (thanks, @mstahl)
 
 2.5.4
 
