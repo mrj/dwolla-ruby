@@ -10,11 +10,11 @@ Official Ruby wrapper for Dwolla's API
 ## Installation
 The easiest way to install the dwolla-ruby gem for now is to use bundler and add the following line to your Gemfile:
 
-  gem 'dwolla-ruby'
+   `gem 'dwolla-ruby'`
 
 The recommended way to install dwolla-ruby is through RubyGems:
 
-  gem install dwolla-ruby
+   `gem install dwolla-ruby`
 
 ## Examples / Quickstart
 
