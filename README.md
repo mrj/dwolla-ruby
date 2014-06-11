@@ -23,11 +23,10 @@ To use the examples in the /examples folder, first edit the _keys.rb file and ad
 This repo includes various usage examples, including:
 
 * Authenticating with OAuth [oauth.rb]
-* Sending money [send.rb]
 * Fetching user information [users.rb]
 * Grabbing a user's contacts [contacts.rb]
 * Listing a user's funding sources [fundingSources.rb]
-* Transacting money [transactions.rb]
+* Transacting money (includes sending) [transactions.rb]
 * Getting a user's balance [balance.rb]
 
 ## Changelog
