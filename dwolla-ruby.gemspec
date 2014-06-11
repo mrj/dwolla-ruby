@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
     s.homepage    = "https://github.com/dwolla/dwolla-ruby"
     s.summary     = %q{Official Ruby Wrapper for Dwolla's API}
     s.description = %q{Official Ruby Wrapper for Dwolla's API. Completely re-written based on Stripe's Ruby Bindings.}
+    s.license     = 'MIT'
 
     s.rubyforge_project = "dwolla-ruby"
 
