@@ -20,7 +20,7 @@ require 'dwolla/funding_sources'
 require 'dwolla/oauth'
 require 'dwolla/offsite_gateway'
 require 'dwolla/accounts'
-# require 'dwolla/register' // Under Construction
+require 'dwolla/masspay'
 
 # Errors
 require 'dwolla/errors/dwolla_error'
