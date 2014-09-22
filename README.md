@@ -2,7 +2,7 @@
 Official Ruby wrapper for Dwolla's API
 
 ## Version
-2.5.5
+2.6.0
 
 ## Requirements
 - [Ruby](http://www.ruby-lang.org/)
@@ -30,6 +30,11 @@ This repo includes various usage examples, including:
 * Getting a user's balance [balance.rb]
 
 ## Changelog
+
+2.6.0
+
+* **BREAKING CHANGE**: OAuth access tokens now expire. Instead of a string, `Dwolla::OAuth::get_token` now returns a hash with an `access_token`, `refresh_token`, and expiration times in seconds for both. In order to refresh authorization, use `Dwolla::OAuth.refresh_auth`
+* All MassPay endpoints have been included in this release for batch payment support.
 
 2.5.5
 
