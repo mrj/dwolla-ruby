@@ -20,6 +20,7 @@ require_relative 'dwolla/funding_sources'
 require_relative 'dwolla/oauth'
 require_relative 'dwolla/offsite_gateway'
 require_relative 'dwolla/accounts'
+require_relative 'dwolla/masspay'
 
 # Errors
 require_relative 'dwolla/errors/dwolla_error'

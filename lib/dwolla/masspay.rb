@@ -16,7 +16,8 @@ module Dwolla
     def self.getItems(id=nil, params={}, token=nil)
       raise MissingParameterError.new('No MassPay Job ID Provided.') if id.nil?
       url = masspay_url
-      url += id.to_s unless id.nil? += '/items'
+      url += id.to_s unless id.nil?
+      url += '/items'
 
       Dwolla.request(:get, url, params, {}, token)
     end
@@ -26,7 +27,9 @@ module Dwolla
       raise MissingParameterError.new('No Item ID Provided.') if itemId.nil?
 
       url = masspay_url
-      url += jobId.to_s unless jobId.nil? += '/items/' += itemId.to_s unless itemId.nil?
+      url += jobId.to_s unless jobId.nil?
+      url += '/items/'
+      url += itemId.to_s unless itemId.nil?
 
       Dwolla.request(:get, url, {}, {}, token)
     end
@@ -37,7 +40,7 @@ module Dwolla
       url = masspay_url
       url += id.to_s unless id.nil?
 
-      Dwolla.request(:get, url, {}, token)
+      Dwolla.request(:get, url, {}, {}, token)
     end
 
     private
