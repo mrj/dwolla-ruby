@@ -1,8 +1,6 @@
 module Dwolla
     class Accounts
-        def self.get_auto_withdrawal_status(funding_id=nil, token = nil)
-          raise MissingParameterError.new('No Funding ID Provided.') if funding_id.nil?
-
+        def self.get_auto_withdrawal_status(token=nil)
           url = accounts_url + 'features/auto_withdrawl'
 
           Dwolla.request(:get, url, {}, {}, token)
