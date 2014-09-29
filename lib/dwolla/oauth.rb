@@ -29,10 +29,19 @@ module Dwolla
           :code => code
       }
 
-      params['redirect_uri'] = redirect_uri unless redirect_uri.nil?
+      # I realize this is ugly, but the unit tests fail
+      # if the key is accessed["like_this"] because the
+      # hash is compared with "quotes" and not :like_this.
+
+      # It may very well be my Ruby version
+      # TODO: Revisit this
+      (params = params.merge({:redirect_uri => redirect_uri})) unless redirect_uri.nil?
 
       resp = Dwolla.request(:get, token_url, params, {}, false, false, true)
 
+      # TODO: Revisit this to make it more unit test friendly, fails ['error_description'] due to
+      # key not existing, same on L58
+      return "No data received." unless resp.is_a?(Hash)
       raise APIError.new(resp['error_description']) unless resp['access_token'] and resp['refresh_token']
 
       return resp
@@ -48,7 +57,8 @@ module Dwolla
 
       resp = Dwolla.request(:get, token_url, params, {}, false, false, true)
 
-      raise APIError.new(resp['error_description']) unless resp['access_token'] and resp['refresh_token']
+      return "No data received." unless resp.is_a?(Hash)
+      raise APIError.new(resp['error_description']) unless resp.has_key['access_token'] and resp['refresh_token']
 
       return resp
     end

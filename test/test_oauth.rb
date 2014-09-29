@@ -10,4 +10,22 @@ class OAuthTest < Test::Unit::TestCase
   end
 
   def test_get_token
+    Dwolla.stubs(:request).with(:get, 'https://www.dwolla.com/oauth/v2/token',
+                                {
+                                    :grant_type => 'authorization_code',
+                                    :code => 'abc',
+                                    :redirect_uri => 'http://google.com'
+                                }, {}, false, false, true)
+    Dwolla::OAuth.get_token('abc', 'http://google.com')
+  end
+
+  def test_refresh_auth
+    Dwolla.stubs(:request).with(:get, 'https://www.dwolla.com/oauth/v2/token',
+                                {
+                                    :grant_type => 'refresh_token',
+                                    :refresh_token => 'abc'
+                                }, {}, false, false, true)
+    Dwolla::OAuth.refresh_auth('abc')
+  end
+
 end
