@@ -52,4 +52,7 @@ class OffsiteGatewayTest < Test::Unit::TestCase
     Dwolla::api_secret = 'def'
     Dwolla::OffsiteGateway.get_checkout_url('812-111-1234')
   end
+
+  ## TODO: Tests to validate OpenSSL digest functionality.
+
 end
