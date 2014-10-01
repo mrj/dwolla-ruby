@@ -34,7 +34,9 @@ This repo includes various usage examples, including:
 2.6.0
 
 * **BREAKING CHANGE**: OAuth access tokens now expire. Instead of a string, `Dwolla::OAuth::get_token` now returns a hash with an `access_token`, `refresh_token`, and expiration times in seconds for both. In order to refresh authorization, use `Dwolla::OAuth.refresh_auth`
+* **BREAKING CHANGE**: Guest send has been officially deprecated and removed from this gem. 
 * All MassPay endpoints have been included in this release for batch payment support.
+* Proper unit tests implemented for all endpoints.
 
 2.5.5
 
