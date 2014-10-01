@@ -127,8 +127,11 @@ This wrapper is heavily based off Stripe's Ruby Gem
 
 ## Support
 
+We highly recommend seeking support on our forums, [located here!](https://discuss.dwolla.com/category/api-support)
+
 - Dwolla API &lt;api@dwolla.com&gt;
-- Michael Schonfeld &lt;michael@dwolla.com&gt;
+- David Stancu &lt;david@dwolla.com&gt;
+- Gordon Zheng &lt;gordon@dwolla.com&gt;
 
 ## References / Documentation
 
