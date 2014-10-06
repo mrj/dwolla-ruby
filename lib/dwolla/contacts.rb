@@ -7,10 +7,18 @@ module Dwolla
         end
 
 
-        def self.nearby(filters={})
-            url = contacts_url + 'nearby'
+        def self.nearby(lat=nil, lon=nil, filters={})
+          raise MissingParameterError.new('No Latitude Provided') unless lat
+          raise MissingParameterError.new('No Longitude Provided.') unless lon
 
-            Dwolla.request(:get, url, filters, {}, false)
+          url = contacts_url + 'nearby'
+
+          params = {
+              :latitude => lat,
+              :longitude => lon
+          }.merge(filters)
+
+          Dwolla.request(:get, url, params, {}, false)
         end
 
         private

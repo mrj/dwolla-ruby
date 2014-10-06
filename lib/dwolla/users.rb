@@ -21,10 +21,13 @@ module Dwolla
             self.get(nil, token)
         end
 
-        def self.nearby(filters={})
-            url = users_url + 'nearby'
+        def self.nearby(params={})
+          raise MissingParameterError.new('No Latitude Provided') unless params[:latitude]
+          raise MissingParameterError.new('No Longitude Provided') unless params[:longitude]
 
-            Dwolla.request(:get, url, filters, {}, false)
+          url = users_url + 'nearby'
+
+          Dwolla.request(:get, url, params, {}, false)
         end
 
         private

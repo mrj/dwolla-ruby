@@ -85,6 +85,8 @@ module Dwolla
             }
 
             resp = Dwolla.request(:post, request_url, params, {}, false, false, true)
+
+            return "No data received." unless resp.is_a?(Hash)
             raise APIError.new(resp['Message']) unless resp['Result'] == 'Success'
 
             return checkout_url + resp['CheckoutId']

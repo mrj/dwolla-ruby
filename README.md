@@ -2,7 +2,7 @@
 Official Ruby wrapper for Dwolla's API
 
 ## Version
-2.5.5
+2.6.0
 
 ## Requirements
 - [Ruby](http://www.ruby-lang.org/)
@@ -30,6 +30,13 @@ This repo includes various usage examples, including:
 * Getting a user's balance [balance.rb]
 
 ## Changelog
+
+2.6.0
+
+* **BREAKING CHANGE**: OAuth access tokens now expire. Instead of a string, `Dwolla::OAuth::get_token` now returns a hash with an `access_token`, `refresh_token`, and expiration times in seconds for both. In order to refresh authorization, use `Dwolla::OAuth.refresh_auth`
+* **BREAKING CHANGE**: Guest send has been officially deprecated and removed from this gem. 
+* All MassPay endpoints have been included in this release for batch payment support.
+* Proper unit tests implemented for all endpoints.
 
 2.5.5
 
@@ -120,8 +127,11 @@ This wrapper is heavily based off Stripe's Ruby Gem
 
 ## Support
 
+We highly recommend seeking support on our forums, [located here!](https://discuss.dwolla.com/category/api-support)
+
 - Dwolla API &lt;api@dwolla.com&gt;
-- Michael Schonfeld &lt;michael@dwolla.com&gt;
+- David Stancu &lt;david@dwolla.com&gt;
+- Gordon Zheng &lt;gordon@dwolla.com&gt;
 
 ## References / Documentation
 

@@ -7,28 +7,28 @@ require 'multi_json'
 require 'addressable/uri'
 
 # Version
-require 'dwolla/version'
+require_relative 'dwolla/version'
 
 # Resources
-require 'dwolla/json'
-require 'dwolla/transactions'
-require 'dwolla/requests'
-require 'dwolla/contacts'
-require 'dwolla/users'
-require 'dwolla/balance'
-require 'dwolla/funding_sources'
-require 'dwolla/oauth'
-require 'dwolla/offsite_gateway'
-require 'dwolla/accounts'
-# require 'dwolla/register' // Under Construction
+require_relative 'dwolla/json'
+require_relative 'dwolla/transactions'
+require_relative 'dwolla/requests'
+require_relative 'dwolla/contacts'
+require_relative 'dwolla/users'
+require_relative 'dwolla/balance'
+require_relative 'dwolla/funding_sources'
+require_relative 'dwolla/oauth'
+require_relative 'dwolla/offsite_gateway'
+require_relative 'dwolla/accounts'
+require_relative 'dwolla/masspay'
 
 # Errors
-require 'dwolla/errors/dwolla_error'
-require 'dwolla/errors/api_connection_error'
-require 'dwolla/errors/api_error'
-require 'dwolla/errors/missing_parameter_error'
-require 'dwolla/errors/authentication_error'
-require 'dwolla/errors/invalid_request_error'
+require_relative 'dwolla/errors/dwolla_error'
+require_relative 'dwolla/errors/api_connection_error'
+require_relative 'dwolla/errors/api_error'
+require_relative 'dwolla/errors/missing_parameter_error'
+require_relative 'dwolla/errors/authentication_error'
+require_relative 'dwolla/errors/invalid_request_error'
 
 module Dwolla
     @@api_key = nil
