@@ -4,6 +4,8 @@ Official Ruby wrapper for Dwolla's API
 ## Version
 2.6.0
 
+[![Build Status](https://travis-ci.org/Dwolla/dwolla-ruby.svg?branch=master)](https://travis-ci.org/Dwolla/dwolla-ruby)
+
 ## Requirements
 - [Ruby](http://www.ruby-lang.org/)
 
