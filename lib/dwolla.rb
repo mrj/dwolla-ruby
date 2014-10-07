@@ -272,7 +272,7 @@ module Dwolla
     end
 
     def self.parse_response(resp)
-        raise APIError.new(resp['Message']) unless resp['Success']
+        raise APIError.new(resp['Message']) unless resp.has_key?('Success') and resp['Success'] == true
 
         return resp['Response']
     end

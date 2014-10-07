@@ -2,7 +2,7 @@
 Official Ruby wrapper for Dwolla's API
 
 ## Version
-2.6.0
+2.6.1
 
 [![Build Status](https://travis-ci.org/Dwolla/dwolla-ruby.svg?branch=master)](https://travis-ci.org/Dwolla/dwolla-ruby)
 
@@ -32,6 +32,9 @@ This repo includes various usage examples, including:
 * Getting a user's balance [balance.rb]
 
 ## Changelog
+
+2.6.1
+* Minor refactoring, fixed bug that would cause crashes in certain Ruby version with checking if keys exist in hashes.
 
 2.6.0
 

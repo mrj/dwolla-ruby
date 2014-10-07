@@ -42,7 +42,7 @@ module Dwolla
       # TODO: Revisit this to make it more unit test friendly, fails ['error_description'] due to
       # key not existing, same on L58
       return "No data received." unless resp.is_a?(Hash)
-      raise APIError.new(resp['error_description']) unless resp['access_token'] and resp['refresh_token']
+      raise APIError.new(resp['error_description']) unless resp.has_key?('access_token') and resp.has_key?('refresh_token')
 
       return resp
     end
@@ -58,7 +58,7 @@ module Dwolla
       resp = Dwolla.request(:get, token_url, params, {}, false, false, true)
 
       return "No data received." unless resp.is_a?(Hash)
-      raise APIError.new(resp['error_description']) unless resp.has_key['access_token'] and resp['refresh_token']
+      raise APIError.new(resp['error_description']) unless resp.has_key?('access_token') and resp.has_key?('refresh_token')
 
       return resp
     end
