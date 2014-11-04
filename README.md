@@ -31,6 +31,21 @@ This repo includes various usage examples, including:
 * Transacting money (includes sending) [transactions.rb]
 * Getting a user's balance [balance.rb]
 
+## Concurrent requests
+
+If making requests using any background processing library such as `Sidkiq` or `Resque`, we recommend that you manually pass in tokens to functions which take an OAuth token. 
+
+For example, we can do this with the `Contacts` class:
+
+```ruby
+# Include the Dwolla gem
+require 'rubygems'
+require 'pp'
+require 'dwolla'
+
+Dwolla::Contacts.get(nil, "your_token")
+```
+
 ## Changelog
 
 2.6.2
