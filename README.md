@@ -2,7 +2,7 @@
 Official Ruby wrapper for Dwolla's API
 
 ## Version
-2.6.2
+2.6.3
 
 [![Build Status](https://travis-ci.org/Dwolla/dwolla-ruby.svg?branch=master)](https://travis-ci.org/Dwolla/dwolla-ruby)
 
@@ -47,6 +47,9 @@ Dwolla::Contacts.get(nil, "your_token")
 ```
 
 ## Changelog
+
+2.6.3
+* Fixed webhook validation, cleaned up OpenSSL Digest calls (thanks, @michaelblinn)!
 
 2.6.2
 * Fixed bug with generation of Off-Site Gateway checkout URLs
