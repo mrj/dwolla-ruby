@@ -94,8 +94,7 @@ module Dwolla
 
         def self.read_callback(body)
             data = JSON.load(body)
-
-            verify_callback_signature(data['Signature'], data['CheckoutId'], data['Amount'])
+            verify_callback_signature(data['signature'], data['checkoutId'], data['amount'])
 
             return data
         end
@@ -105,17 +104,16 @@ module Dwolla
         end
 
         private
-
-        def self.verify_callback_signature(candidate=nil, checkout_id=nil, amount=nil)
+	def self.verify_callback_signature(candidate=nil, checkout_id=nil, amount=nil)
             key = "#{checkout_id}&#{amount}"
-            digest  = OpenSSL::Digest::Digest.new('sha1')
+            digest  = OpenSSL::Digest.new('sha1')
             signature = OpenSSL::HMAC.hexdigest(digest, Dwolla::api_secret, key)
 
             raise APIError.new("Invalid callback signature (#{candidate} vs #{signature})") unless candidate == signature
         end
 
         def self.verify_webhook_signature(candidate=nil, body=nil)
-            digest  = OpenSSL::Digest::Digest.new('sha1')
+            digest  = OpenSSL::Digest.new('sha1')
             signature = OpenSSL::HMAC.hexdigest(digest, Dwolla::api_secret, body)
 
             raise APIError.new("Invalid Webhook signature (#{candidate} vs #{signature})") unless candidate == signature
