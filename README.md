@@ -2,7 +2,7 @@
 Official Ruby wrapper for Dwolla's API
 
 ## Version
-2.6.3
+2.6.4
 
 [![Build Status](https://travis-ci.org/Dwolla/dwolla-ruby.svg?branch=master)](https://travis-ci.org/Dwolla/dwolla-ruby)
 
@@ -47,6 +47,9 @@ Dwolla::Contacts.get(nil, "your_token")
 ```
 
 ## Changelog
+
+2.6.4
+* Fixed bug with refresh token call.  Parameters were not being JSON encoded.  Now OAuth `get_token` and `refresh_auth` calls use POST instead of GET.  
 
 2.6.3
 * Fixed webhook validation, cleaned up OpenSSL Digest calls (thanks, @michaelblinn)!
