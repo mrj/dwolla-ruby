@@ -10,7 +10,7 @@ class OAuthTest < Test::Unit::TestCase
   end
 
   def test_get_token
-    Dwolla.stubs(:request).with(:get, 'https://www.dwolla.com/oauth/v2/token',
+    Dwolla.stubs(:request).with(:post, 'https://www.dwolla.com/oauth/v2/token',
                                 {
                                     :grant_type => 'authorization_code',
                                     :code => 'abc',
@@ -20,7 +20,7 @@ class OAuthTest < Test::Unit::TestCase
   end
 
   def test_refresh_auth
-    Dwolla.stubs(:request).with(:get, 'https://www.dwolla.com/oauth/v2/token',
+    Dwolla.stubs(:request).with(:post, 'https://www.dwolla.com/oauth/v2/token',
                                 {
                                     :grant_type => 'refresh_token',
                                     :refresh_token => 'abc'
