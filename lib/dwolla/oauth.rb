@@ -37,7 +37,7 @@ module Dwolla
       # TODO: Revisit this
       (params = params.merge({:redirect_uri => redirect_uri})) unless redirect_uri.nil?
 
-      resp = Dwolla.request(:get, token_url, params, {}, false, false, true)
+      resp = Dwolla.request(:post, token_url, params, {}, false, false, true)
 
       # TODO: Revisit this to make it more unit test friendly, fails ['error_description'] due to
       # key not existing, same on L58
@@ -55,7 +55,7 @@ module Dwolla
           :refresh_token => refresh_token
       }
 
-      resp = Dwolla.request(:get, token_url, params, {}, false, false, true)
+      resp = Dwolla.request(:post, token_url, params, {}, false, false, true)
 
       return "No data received." unless resp.is_a?(Hash)
       raise APIError.new(resp['error_description']) unless resp.has_key?('access_token') and resp.has_key?('refresh_token')
