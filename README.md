@@ -1,4 +1,6 @@
 # dwolla-ruby
+
+[![Join the chat at https://gitter.im/Dwolla/dwolla-ruby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Dwolla/dwolla-ruby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Official Ruby wrapper for Dwolla's API
 
 ## Version
