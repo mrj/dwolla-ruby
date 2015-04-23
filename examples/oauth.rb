@@ -49,3 +49,12 @@ get '/oauth_refresh' do
   refresh_token = info['refresh_token']
   "Your expiring OAuth access token is: <b>#{token}</b>, and your refresh token is <b>#{refresh_token}</b>"
 end
+
+# STEP 4: View the endpoints elligible for use with
+# the passed OAuth token.
+#
+get '/catalog' do
+  token = params['token']
+  catalog = Dwolla::OAuth.catalog(token)
+  "The endpoints available for use with this token are #{catalog}"
+end
