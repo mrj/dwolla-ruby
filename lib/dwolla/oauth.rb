@@ -64,7 +64,7 @@ module Dwolla
     end
 
     def self.catalog(token=nil)
-      resp = Dwolla.request(:get, '/catalog', {}, {}, true, false, false)
+      resp = Dwolla.request(:get, '/catalog', {}, {}, token, false, false)
 
       raise APIError.new(resp['Message']) if !resp['Success']
       return resp['_links']

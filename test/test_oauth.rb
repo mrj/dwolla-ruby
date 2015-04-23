@@ -29,8 +29,8 @@ class OAuthTest < Test::Unit::TestCase
   end
 
   def test_catalog
-    Dwolla.stubs(:request).with(:get, 'https://www.dwolla.com/oauth/rest/catalog',
-                                {:oauth_token => 'abc'}, {}, false, false, true)
+    Dwolla.stubs(:request).with(:get, '/catalog',
+                                {}, {}, 'abc', false, false)
     Dwolla::OAuth.catalog('abc')
   end
 
