@@ -49,4 +49,23 @@ class TransactionsTest < Test::Unit::TestCase
                                     :amount => 15.00
                                 }, 'abc')
   end
+
+  def test_schedule
+    Dwolla.stubs(:request).with(:post, '/transactions/scheduled',
+                                {
+                                    :pin => 1337,
+                                    :amount => 15.00,
+                                    :destinationId => '812-111-1111',
+                                    :fundsSource => 'abcdef',
+                                    :scheduleDate => '2015-10-19'
+                                }, {}, 'abc')
+
+    Dwolla::Transactions.schedule({
+                                    :pin => 1337,
+                                    :amount => 15.00,
+                                    :destinationId => '812-111-1111',
+                                    :fundsSource => 'abcdef',
+                                    :scheduleDate => '2015-10-19'
+                              }, 'abc')    
+  end
 end

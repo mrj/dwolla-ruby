@@ -29,10 +29,21 @@ pp Dwolla::Transactions.get
 #   Get details about a certain Transaction
 pp Dwolla::Transactions.get(transactionId)
 
-# EXAMPLE 4:
+# EXAMPLE 5:
 #   Get details about a certain Transaction
 #   using the API key & secret
 Dwolla::token = ''
 Dwolla::api_key = @api_key
 Dwolla::api_secret = @api_secret
 pp Dwolla::Transactions.get(transactionId, {}, false)
+
+# EXAMPLE 6: 
+#   Send money ($1.00) to a Dwolla ID
+#   on 2015-09-09 from funding source "abcdef"
+Dwolla::Transactions.schedule({
+                                :pin => @pin,
+                                :amount => 1.00,
+                                :destinationId => '812-111-1111',
+                                :fundsSource => 'abcdef',
+                                :scheduleDate => '2015-09-09'}) 
+

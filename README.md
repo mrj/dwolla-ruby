@@ -52,6 +52,7 @@ Dwolla::Contacts.get(nil, "your_token")
 
 2.6.5
 * Added new catalog endpoint to OAuth module + unit tests and examples.
+* Added new scheduled transaction endpoints to Transactions module + unit tests and examples.
 
 2.6.4
 * Fixed bug with refresh token call.  Parameters were not being JSON encoded.  Now OAuth `get_token` and `refresh_auth` calls use POST instead of GET.  

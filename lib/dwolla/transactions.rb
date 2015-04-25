@@ -42,6 +42,18 @@ module Dwolla
             Dwolla.request(:post, url, params, {}, token)
         end
 
+        def self.schedule(params={}, token=nil)
+            raise MissingParameterError.new('No PIN Provided.') unless params[:pin]
+            raise MissingParameterError.new('No Destination ID Provided.') unless params[:destinationId]
+            raise MissingParameterError.new('No Amount Provided.') unless params[:amount]
+            raise MissingParameterError.new('No Scheduled Date Provided') unless params[:scheduleDate]
+            raise MissingParameterError.new('No Funds Source Provided.') unless params[:fundsSource]
+
+            url = transactions_url + 'scheduled'
+
+            Dwolla.request(:post, url, params, {}, token)
+        end
+
         class << self
             alias_method :listing, :get
             alias_method :send, :create
