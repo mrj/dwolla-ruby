@@ -69,4 +69,4 @@ pp Dwolla::Transactions.delete_scheduled_by_id('abcd123', {:pin => @pin})
 
 # EXAMPLE 11: 
 #   Delete all scheduled transactions 
-pp Dwolla::Transactions.delete_all_scheduled('abcd123', {:pin => @pin})
+pp Dwolla::Transactions.delete_all_scheduled({:pin => @pin})
