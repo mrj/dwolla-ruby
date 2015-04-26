@@ -84,7 +84,7 @@ class TransactionsTest < Test::Unit::TestCase
   end  
 
   def test_edit_scheduled
-     Dwolla.stubs(:request).with(:post, '/transactions/scheduled/12345',
+     Dwolla.stubs(:request).with(:put, '/transactions/scheduled/12345',
                                 {
                                     :pin => 1337,
                                     :amount => 15.00,

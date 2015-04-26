@@ -76,7 +76,7 @@ module Dwolla
             url = transactions_url + 'scheduled/' 
             url += id.to_s unless id.nil?
 
-            Dwolla.request(:post, url, params, {}, token)
+            Dwolla.request(:put, url, params, {}, token)
         end
 
         def self.delete_scheduled_by_id(id, params={}, token=nil)
