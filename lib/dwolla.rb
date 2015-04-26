@@ -165,8 +165,8 @@ module Dwolla
         url = self.endpoint_url(url) unless custom_url
 
         case method.to_s.downcase.to_sym
-            when :get
-                # Make params into GET parameters
+            when :get || :delete
+                # Make params into GET/DELETE parameters
                 if params && params.count > 0
                     uri = Addressable::URI.new
                     uri.query_values = params

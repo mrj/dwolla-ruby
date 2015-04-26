@@ -68,4 +68,51 @@ class TransactionsTest < Test::Unit::TestCase
                                     :scheduleDate => '2015-10-19'
                               }, 'abc')    
   end
+
+  def test_scheduled
+    Dwolla.stubs(:request).with(:get, '/transactions/scheduled',
+                                {}, {}, 'abc')
+
+    Dwolla::Transactions.scheduled({}, 'abc')    
+  end
+
+  def test_scheduled_by_id
+    Dwolla.stubs(:request).with(:get, '/transactions/scheduled/1234',
+                                {}, {}, 'abc')
+
+    Dwolla::Transactions.scheduled_by_id('1234', 'abc')    
+  end  
+
+  def test_edit_scheduled
+     Dwolla.stubs(:request).with(:post, '/transactions/scheduled/12345',
+                                {
+                                    :pin => 1337,
+                                    :amount => 15.00,
+                                }, {}, 'abc')
+
+    Dwolla::Transactions.edit_scheduled('12345', {
+                                    :pin => 1337,
+                                    :amount => 15.00}, 'abc')      
+  end
+
+  def test_delete_scheduled_by_id
+     Dwolla.stubs(:request).with(:delete, '/transactions/scheduled/12345',
+                                {
+                                    :pin => 1337,
+                                }, {}, 'abc')
+
+    Dwolla::Transactions.delete_scheduled_by_id('12345', {
+                                    :pin => 1337}, 'abc')      
+  end
+
+  def test_delete_all_scheduled
+     Dwolla.stubs(:request).with(:delete, '/transactions/scheduled',
+                                {
+                                    :pin => 1337,
+                                }, {}, 'abc')
+
+    Dwolla::Transactions.delete_all_scheduled({
+                                    :pin => 1337}, 'abc')      
+  end
+
 end

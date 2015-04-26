@@ -40,10 +40,33 @@ pp Dwolla::Transactions.get(transactionId, {}, false)
 # EXAMPLE 6: 
 #   Send money ($1.00) to a Dwolla ID
 #   on 2015-09-09 from funding source "abcdef"
-Dwolla::Transactions.schedule({
+pp Dwolla::Transactions.schedule({
                                 :pin => @pin,
                                 :amount => 1.00,
                                 :destinationId => '812-111-1111',
                                 :fundsSource => 'abcdef',
                                 :scheduleDate => '2015-09-09'}) 
 
+
+# EXAMPLE 7: 
+#   Get all scheduled transactions
+pp Dwolla::Transactions.scheduled() 
+
+# EXAMPLE 8: 
+#   Get scheduled transaction with ID
+#   'abcd214'
+pp Dwolla::Transactions.scheduled_by_id('abcd214') 
+
+# EXAMPLE 9: 
+#   Edit scheduled transaction with ID 
+#   'abcd123' to have new amount 10.50
+pp Dwolla::Transactions.edit_scheduled_by_id('abcd123', {:amount => 10.50})
+
+# EXAMPLE 10: 
+#   Delete the scheduled transaction with ID 
+#   'abcd123' 
+pp Dwolla::Transactions.delete_scheduled_by_id('abcd123', {:pin => @pin})
+
+# EXAMPLE 11: 
+#   Delete all scheduled transactions 
+pp Dwolla::Transactions.delete_all_scheduled('abcd123', {:pin => @pin})

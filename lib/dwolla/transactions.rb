@@ -54,6 +54,49 @@ module Dwolla
             Dwolla.request(:post, url, params, {}, token)
         end
 
+        def self.scheduled(filters={}, token=nil)
+            url = transactions_url + 'scheduled'
+
+            Dwolla.request(:get, url, filters, {}, token)
+        end
+
+        def self.scheduled_by_id(id, token=nil)
+            raise MissingParameterError.new('No Scheduled Transaction ID Provided.') unless id
+
+            url = transactions_url + 'scheduled/' 
+            url += id.to_s unless id.nil?
+
+            Dwolla.request(:get, url, {}, {}, token)
+        end
+
+        def self.edit_scheduled(id, params={}, token=nil)
+            raise MissingParameterError.new('No PIN Provided.') unless params[:pin]
+            raise MissingParameterError.new('No Scheduled Transaction ID Provided.') unless id
+
+            url = transactions_url + 'scheduled/' 
+            url += id.to_s unless id.nil?
+
+            Dwolla.request(:post, url, params, {}, token)
+        end
+
+        def self.delete_scheduled_by_id(id, params={}, token=nil)
+            raise MissingParameterError.new('No PIN Provided.') unless params[:pin]
+            raise MissingParameterError.new('No Scheduled Transaction ID Provided.') unless id
+
+            url = transactions_url + 'scheduled/'
+            url += id.to_s unless id.nil?
+
+            Dwolla.request(:delete, url, params, {}, token)
+        end        
+
+        def self.delete_all_scheduled(params={}, token=nil)
+            raise MissingParameterError.new('No PIN Provided.') unless params[:pin]
+
+            url = transactions_url + 'scheduled' 
+
+            Dwolla.request(:delete, url, params, {}, token)
+        end
+
         class << self
             alias_method :listing, :get
             alias_method :send, :create
