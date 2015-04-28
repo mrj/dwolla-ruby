@@ -28,4 +28,10 @@ class OAuthTest < Test::Unit::TestCase
     Dwolla::OAuth.refresh_auth('abc')
   end
 
+  def test_catalog
+    Dwolla.stubs(:request).with(:get, '/catalog',
+                                {}, {}, 'abc', false, false)
+    Dwolla::OAuth.catalog('abc')
+  end
+
 end

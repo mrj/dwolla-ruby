@@ -63,6 +63,14 @@ module Dwolla
       return resp
     end
 
+    def self.catalog(token=nil)
+      resp = Dwolla.request(:get, '/catalog', {}, {}, token, false, false)
+
+      return "No data received." unless resp.is_a?(Hash)
+      raise APIError.new(resp['Message']) unless resp.has_key?('_links')
+      return resp['_links']
+    end
+
     private
 
     def self.auth_url
