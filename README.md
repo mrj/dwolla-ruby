@@ -4,7 +4,7 @@
 Official Ruby wrapper for Dwolla's API
 
 ## Version
-2.6.5
+2.6.6
 
 [![Build Status](https://travis-ci.org/Dwolla/dwolla-ruby.svg?branch=master)](https://travis-ci.org/Dwolla/dwolla-ruby)
 
@@ -49,6 +49,9 @@ Dwolla::Contacts.get(nil, "your_token")
 ```
 
 ## Changelog
+
+2.6.6
+* Added new `verified_account` parameter to authorization URL.
 
 2.6.5
 * Added new catalog endpoint to OAuth module + unit tests and examples.

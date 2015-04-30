@@ -1,6 +1,6 @@
 module Dwolla
   class OAuth
-    def self.get_auth_url(redirect_uri=nil, scope=Dwolla::scope)
+    def self.get_auth_url(redirect_uri=nil, scope=Dwolla::scope, verified_account=false)
       raise AuthenticationError.new('No Api Key Provided.') unless Dwolla::api_key
 
       params = {
@@ -8,6 +8,8 @@ module Dwolla
           :response_type => 'code',
           :client_id => Dwolla::api_key
       }
+
+      if verified_account then params[:verified_account] = true end
 
       params['redirect_uri'] = redirect_uri unless redirect_uri.nil?
 
