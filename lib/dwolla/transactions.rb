@@ -22,7 +22,6 @@ module Dwolla
         end
 
         def self.create(params={}, token=nil)
-            raise MissingParameterError.new('No PIN Provided.') unless params[:pin]
             raise MissingParameterError.new('No Destination ID Provided.') unless params[:destinationId]
             raise MissingParameterError.new('No Amount Provided.') unless params[:amount]
 
