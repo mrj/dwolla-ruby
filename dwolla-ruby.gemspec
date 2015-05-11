@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
     s.test_files    = `git ls-files -- test/*`.split("\n")
     s.require_paths = %w{lib}
 
-    s.add_dependency('rest-client', '~> 1.4')
+    s.add_dependency('rest-client', '~> 1.7.3')
     s.add_dependency('multi_json', '>= 1.0.4', '< 2')
     s.add_dependency('addressable', '>= 2')
 
