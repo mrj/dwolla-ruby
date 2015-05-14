@@ -6,10 +6,9 @@ module Dwolla
       params = {
           :scope => scope,
           :response_type => 'code',
-          :client_id => Dwolla::api_key
+          :client_id => Dwolla::api_key, 
+          :verified_account => verified_account
       }
-
-      if verified_account then params[:verified_account] = true end
 
       params['redirect_uri'] = redirect_uri unless redirect_uri.nil?
 

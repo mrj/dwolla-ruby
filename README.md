@@ -4,7 +4,7 @@
 Official Ruby wrapper for Dwolla's API
 
 ## Version
-2.6.6
+2.6.7
 
 [![Build Status](https://travis-ci.org/Dwolla/dwolla-ruby.svg?branch=master)](https://travis-ci.org/Dwolla/dwolla-ruby)
 
@@ -49,6 +49,9 @@ Dwolla::Contacts.get(nil, "your_token")
 ```
 
 ## Changelog
+
+2.6.7
+* Removed `pin` as required argument for certain transactional operations due to compliance with Dwolla Direct.
 
 2.6.6
 * Added new `verified_account` parameter to authorization URL.
