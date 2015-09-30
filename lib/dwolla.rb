@@ -272,6 +272,7 @@ module Dwolla
     end
 
     def self.parse_response(resp)
+        raise APIConnectionError.new("Network issue / unserializable response. Please try again.") unless resp.is_a?(Hash)
         raise APIError.new(resp['Message']) unless resp.has_key?('Success') and resp['Success'] == true
 
         return resp['Response']
