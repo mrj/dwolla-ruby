@@ -6,8 +6,6 @@ module Dwolla
             if id.is_a?(Hash)
                 filters = id
                 id = nil
-            else
-                filters = {}
             end
 
             url += id.to_s unless id.nil?

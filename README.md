@@ -4,7 +4,7 @@
 Official Ruby wrapper for Dwolla's API
 
 ## Version
-2.6.9
+2.7.0
 
 [![Build Status](https://travis-ci.org/Dwolla/dwolla-ruby.svg?branch=master)](https://travis-ci.org/Dwolla/dwolla-ruby)
 
@@ -49,6 +49,9 @@ Dwolla::Contacts.get(nil, "your_token")
 ```
 
 ## Changelog
+
+2.7.0
+* Fix loss of filter parameters issue in `Transactions#get`. (thanks, @jackchang!)
 
 2.6.9
 * Handling of network errors has improved. If there is any issue receiving an API response an `APIConnectionError` will now be thrown. 
