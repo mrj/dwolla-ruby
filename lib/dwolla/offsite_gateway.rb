@@ -63,8 +63,6 @@ module Dwolla
 
         def self.get_checkout_url(destinationId)
             params = {
-                :key => Dwolla::api_key,
-                :secret => Dwolla::api_secret,
                 :allowFundingSources => @allow_funding_sources,
                 :additionalFundingSources => @additional_funding_sources,
                 :test => @test_mode,
@@ -84,10 +82,10 @@ module Dwolla
                 }
             }
 
-            resp = Dwolla.request(:post, request_url, params, {}, false, false, true)
+            resp = Dwolla.request(:post, request_url, params, {}, false)
 
             return "No data received." unless resp.is_a?(Hash)
-            raise APIError.new(resp['Message']) unless resp.has_key?('Result') and resp['Result'] == 'Success'
+            raise APIError.new('No CheckoutId returned') unless resp.has_key?('CheckoutId')
 
             return checkout_url + resp['CheckoutId']
         end
@@ -120,11 +118,7 @@ module Dwolla
         end
 
         def self.request_url
-            if Dwolla::sandbox
-                return 'https://uat.dwolla.com/payment/request'
-            else
-                return 'https://www.dwolla.com/payment/request'
-            end
+            '/offsitegateway/checkouts'
         end
 
         def self.checkout_url
